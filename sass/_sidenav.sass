@@ -1,20 +1,44 @@
 .nav-side-toggler
-  height: 30px
-  width: 30px
+  height: 40px
+  width: 40px
   background-color: transparent
-  padding: 5px
   border: none
   cursor: pointer
   display: flex
-  flex-direction: column
-  justify-content: space-between
+  justify-content: center
+  align-items: center
 
-.nav-toggler-icon-bar
+.nav-toggle-icon,
+.nav-toggle-icon::before,
+.nav-toggle-icon::after
   display: flex
   height: 5px
-  width: 100%
+  width: 36px
   border-radius: 3px
   background-color: black
+
+.nav-side--expand .nav-toggle-icon::before,
+.nav-side--expand .nav-toggle-icon::after
+  width: 18px
+
+.nav-side--expand .nav-toggle-icon::before
+  transform: rotate(45deg) translate(-2px, 9px)
+
+.nav-side--expand .nav-toggle-icon::after
+  transform: rotate(-45deg) translate(-2px, -9px)
+
+.nav-toggle-icon::before,
+.nav-toggle-icon::after
+  width: 36px
+  content: ''
+  position: absolute
+  transition: transform .3s ease, width .3s ease
+
+.nav-toggle-icon::before
+  transform: translateY(10px)
+
+.nav-toggle-icon::after
+  transform: translateY(-10px)
 
 .nav-side
   width: 60px
