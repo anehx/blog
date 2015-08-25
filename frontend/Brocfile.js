@@ -24,4 +24,6 @@ var appJs = concat('js', {
 
 var assets = funnel('assets')
 
-module.exports = mergeTrees([ appSass, vendorJs, appJs, assets ])
+var fixtures = funnel('fixtures')
+
+module.exports = mergeTrees([ appSass, vendorJs, appJs, assets, fixtures ])

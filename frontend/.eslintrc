@@ -5,13 +5,8 @@
     "node": false,
     "amd": false
   },
-  "ecmaFeatures": {
-    "blockBindings": true,
-    "modules": true,
-    "module": true
-  },
   "globals": {
-    "fetch"
+    "$": true
   },
   "rules": {
     "eol-last": 2,
@@ -24,7 +19,6 @@
     "no-catch-shadow": 2,
     "no-irregular-whitespace": 2,
     "no-cond-assign": 2,
-    "no-console": 1,
     "no-constant-condition": 2,
     "no-control-regex": 2,
     "no-debugger": 2,

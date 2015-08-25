@@ -17,10 +17,26 @@ body
   display: flex
   flex-direction: row
 
+.page-content::before
+  content: ''
+  background-color: black
+  position: absolute
+  left: 0
+  top: 0
+  right: 0
+  bottom: 0
+  opacity: 0
+  transition: opacity .5s ease
+
 .page-wrapper
+  position: relative
   display: flex
   flex-grow: 1
   flex-direction: column
+  transition: filter .3s ease
+  &--darken
+    .page-content::before
+      opacity: .4
 
 .page-content
   flex-grow: 1

@@ -1,8 +1,8 @@
 install:
-	@npm i && bower i
+	@cd frontend && npm i && bower i
 
 build:
-	@broccoli build dist
+	@cd frontend && broccoli build dist
 
 watch:
-	@broccoli serve --host 0.0.0.0
+	@cd frontend && broccoli serve --host 0.0.0.0
