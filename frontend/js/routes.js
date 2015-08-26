@@ -70,7 +70,7 @@ $(function() {
     }
   }
 
-  Router.route(/#\/posts/, function(params) {
+  Router.route(/#\/posts/, function() {
     $.getJSON('/posts.json', function(data) {
       var html = ''
       data.forEach(function(post) {
@@ -79,6 +79,27 @@ $(function() {
         html += '<section class="post">' + title + content + '</section>'
       })
       Router.setContent(html)
+    })
+  })
+
+  Router.route(/#\/login/, function() {
+    var fn = this
+
+    if (localStorage.getItem('credentials')) {
+      Router.setContent('<h1>You are logged in</h1>')
+    }
+    else {
+      Router.setContent('<form id="login"><input name="username" type="text" /><input name="password" type="password" /><input type="submit" value="Login" />')
+    }
+
+    $('#view').on('submit', '#login', function(e) {
+      e.preventDefault()
+
+      var username = $(this).find('[name="username"]')
+      var password = $(this).find('[name="password"]')
+
+      localStorage.setItem('credentials', JSON.stringify({ username, password }))
+      Router.check()
     })
   })
 
