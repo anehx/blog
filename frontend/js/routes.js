@@ -83,13 +83,11 @@ $(function() {
   })
 
   Router.route(/#\/login/, function() {
-    var fn = this
-
     if (localStorage.getItem('credentials')) {
       Router.setContent('<h1>You are logged in</h1>')
     }
     else {
-      Router.setContent('<form id="login"><input name="username" type="text" /><input name="password" type="password" /><input type="submit" value="Login" />')
+      Router.setContent('<div class="login"><form id="login" class="form login-form"><input name="username" type="text" /><input name="password" type="password" /><input type="submit" value="Login" /></div>')
     }
 
     $('#view').on('submit', '#login', function(e) {
