@@ -8,37 +8,43 @@
   justify-content: center
   align-items: center
 
+.nav-toggle-icon
+  position: relative
+
 .nav-toggle-icon,
 .nav-toggle-icon::before,
 .nav-toggle-icon::after
   display: flex
-  height: 5px
+  height: 6px
   width: 36px
   border-radius: 3px
-  background-color: black
+  transition: all 0.3s ease 0s
+  background: black
 
 .nav-side--expand .nav-toggle-icon::before,
 .nav-side--expand .nav-toggle-icon::after
-  width: 18px
+  left: -1px
+  top: 0
+  width: 20px
 
 .nav-side--expand .nav-toggle-icon::before
-  transform: rotate(45deg) translate(-2px, 9px)
+  transform: rotate3d(0, 0, 1, 45deg)
 
 .nav-side--expand .nav-toggle-icon::after
-  transform: rotate(-45deg) translate(-2px, -9px)
+  transform: rotate3d(0, 0, 1, -45deg)
 
 .nav-toggle-icon::before,
 .nav-toggle-icon::after
-  width: 36px
   content: ''
+  left: 0
   position: absolute
-  transition: transform .3s ease, width .3s ease
+  transform-origin: 3px center
 
 .nav-toggle-icon::before
-  transform: translateY(10px)
+  top: 10px
 
 .nav-toggle-icon::after
-  transform: translateY(-10px)
+  top: -10px
 
 .nav-side
   width: 60px
@@ -60,14 +66,15 @@
   line-height: 40px
   overflow: hidden
   transition: width .5s ease-out
-  font-size: 30px
-  color: #16ABD5
+  font-size: 1.5em
+
+  a, p
+    margin-left: 10px
+    color: #16ABD5
+    text-decoration: none
 
 .nav-side--expand .nav-side-brand
   width: 140px
-
-.nav-side-header > a
-  text-decoration: none
 
 .nav-side-list
   display: flex

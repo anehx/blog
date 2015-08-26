@@ -6,7 +6,8 @@ $(function() {
     $('.page-wrapper').toggleClass('page-wrapper--darken')
   }
 
-  $('.nav-side-toggler').on('click', toggleNav)
-  $('.nav-side-list-item').on('click', toggleNav)
-  $('.nav-side-brand').on('click', toggleNav)
+  $('body').on('click', '.nav-side-toggler',                   toggleNav)
+  $('body').on('click', '.nav-side-list-item',                 toggleNav)
+  $('body').on('click', '.nav-side-brand a',                   toggleNav)
+  $('body').on('click', '.page-wrapper--darken .page-content', toggleNav)
 })

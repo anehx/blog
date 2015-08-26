@@ -1,50 +1,95 @@
 $(function() {
   'use strict'
 
-  function setContent(title) {
+  var Router = {
+    routes: [],
+    view: $('#view'),
 
-    switch(title) {
+    index: function() {
+      this.setContent('<h1>Welcome!</h1>')
+    },
 
-      case 'posts':
-        $.getJSON('/posts.json', function(data) {
-          var html = ''
-          data.forEach(function(post) {
-            var title   = '<h1>' + post.title + '</h1>'
-            var content = '<p>' + post.content + '</p>'
-            html += '<section class="post">' + title + content + '</section>'
-          })
-          $('#index-page').html(html)
+    error: function() {
+      this.setContent('<h1>404 Not Found</h1>')
+    },
+
+    setContent(content) {
+      this.view.fadeOut(function() {
+        this.view.html(content).fadeIn()
+      }.bind(this))
+    },
+
+    route: function(re, handler) {
+      this.routes.push({ re, handler })
+
+      return this
+    },
+
+    check: function() {
+      var fragment = location.hash
+      var matched = false
+      var content = ''
+
+      if (fragment === '') {
+        this.index()
+      }
+      else {
+        this.routes.forEach(function(route) {
+          var match = fragment.match(route.re)
+
+          if (match) {
+            matched = true
+            match.shift()
+            route.handler.apply({}, match)
+          }
         })
-        break;
 
-      case 'login':
-        $('#index-page').html('<h1>Login please</h2>')
-        break;
+        if (!matched) content = this.error()
+      }
 
-      default:
-        $('#index-page').html('<h1>Welcome</h2>')
+      return this
+    },
+
+    transitionTo: function(path, options) {
+      var o = options ? options : { title: null, active: null }
+
+      history.pushState(o, o.title, path)
+
+      $('a.history-link').removeClass('active')
+
+      if (o.active) {
+        $('a.history-link[data-title="' + o.active + '"]').addClass('active')
+      }
+      else {
+        $('a.history-link[href="/' + location.hash + '"]').addClass('active')
+      }
+
+      this.check()
+
+      return this
     }
-
   }
 
-  setContent('index')
+  Router.route(/#\/posts/, function(params) {
+    $.getJSON('/posts.json', function(data) {
+      var html = ''
+      data.forEach(function(post) {
+        var title   = '<h1>' + post.title + '</h1>'
+        var content = '<p>' + post.content + '</p>'
+        html += '<section class="post">' + title + content + '</section>'
+      })
+      Router.setContent(html)
+    })
+  })
 
-  $('a.history-link').on('click', function(e) {
+  $('body').on('click', 'a.history-link', function(e) {
     e.preventDefault()
-
-    history.pushState({
-      active: $(this).data('active'),
-      title:  $(this).data('title')
-    }, $(this).data('title'), $(this).data('url'))
-
-    setContent($(this).data('title'))
-
-    $('a.history-link').removeClass('active')
-    $('a.history-link[data-title="'+history.state.active+'"]').addClass('active')
+    Router.transitionTo($(this).attr('href'), $(this).data())
   })
 
   $(window).on('popstate', function(e) {
-    setContent(e.originalEvent.state.title)
+    Router.check()
   })
 
+  Router.transitionTo(location.hash)
 })
