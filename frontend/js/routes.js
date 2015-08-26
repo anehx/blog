@@ -13,9 +13,10 @@ $(function() {
       this.setContent('<h1>404 Not Found</h1>')
     },
 
-    setContent(content) {
-      this.view.fadeOut(function() {
-        this.view.html(content).fadeIn()
+    setContent(content, transitionDuration) {
+      var duration = transitionDuration ? transitionDuration : 400
+      this.view.fadeOut(duration, function() {
+        this.view.html(content).fadeIn(duration)
       }.bind(this))
     },
 
@@ -28,7 +29,6 @@ $(function() {
     check: function() {
       var fragment = location.hash
       var matched = false
-      var content = ''
 
       if (fragment === '') {
         this.index()
@@ -44,7 +44,7 @@ $(function() {
           }
         })
 
-        if (!matched) content = this.error()
+        if (!matched) this.error()
       }
 
       return this
