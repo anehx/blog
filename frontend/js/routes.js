@@ -70,7 +70,7 @@ $(function() {
     }
   }
 
-  Router.route(/#\/posts/, function() {
+  Router.route(/#\/posts\/$/, function() {
     $.getJSON('/posts.json', function(data) {
       var html = ''
       data.forEach(function(post) {
@@ -82,7 +82,7 @@ $(function() {
     })
   })
 
-  Router.route(/#\/login/, function() {
+  Router.route(/#\/login\/$/, function() {
     if (localStorage.getItem('credentials')) {
       Router.setContent('<h1>You are logged in</h1>')
     }
