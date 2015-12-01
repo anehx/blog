@@ -15,15 +15,31 @@ var vendorJs = concat('bower_components', {
   outputFile: '/vendor.js'
 })
 
-var appJs = concat('js', {
+var config = 'config'
+
+var libJs = concat('lib', {
+  inputFiles: [
+    '**/*.js'
+  ],
+  outputFile: '/lib.js'
+})
+
+var appJs = concat('app', {
   inputFiles: [
     '**/*.js'
   ],
   outputFile: '/app.js'
 })
 
-var assets = funnel('assets')
+var assets = funnel('public')
 
-var fixtures = funnel('fixtures')
+var js = concat(mergeTrees([ config, libJs, appJs ]), {
+  inputFiles: [
+    'environment.js',
+    'lib.js',
+    'app.js'
+  ],
+  outputFile: '/app.js'
+})
 
-module.exports = mergeTrees([ appSass, vendorJs, appJs, assets, fixtures ])
+module.exports = mergeTrees([ appSass, vendorJs, js, assets ])

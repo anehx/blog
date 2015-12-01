@@ -6,3 +6,6 @@ build:
 
 watch:
 	@cd frontend && broccoli serve --host 0.0.0.0
+
+run-backend:
+	@php -S localhost:9999 -t backend
