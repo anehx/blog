@@ -19,7 +19,6 @@ var config = 'config'
 
 var libJs = concat('lib', {
   inputFiles: [
-    'TemplateEngine.js',
     'Router.js',
     'Store.js',
     'App.js'
