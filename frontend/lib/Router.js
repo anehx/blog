@@ -20,8 +20,10 @@ Router.prototype = {
   },
 
   route: function(re, handler) {
-    var str   = (re.length > 1 ? '^#' : '^') + re + '/?$'
-    var regex = new RegExp(str)
+    var prefix = '^' + (re.length > 1 && config.hash ? '#' : '')
+    var suffix = '/?$'
+
+    var regex = new RegExp(prefix + re + suffix)
     this.routes.push({ re: regex, handler: handler })
 
     return this
