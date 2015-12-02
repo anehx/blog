@@ -40,14 +40,11 @@ Store.prototype = {
   },
 
   query: function(item, queryParams, callback) {
-    var url  = item + '?'
-    var keys = Object.getOwnPropertyNames(queryParams)
-
-    for (var i = 0; i < keys.length; i++) {
+    var url = Object.keys(queryParams).reduce(function(url, key, i) {
       if (i) url += '&'
 
-      url += keys[i] + '=' + queryParams[keys[i]]
-    }
+      return url + key + '=' + queryParams[key]
+    }, item + '?')
 
     this.ajaxGet(url, callback)
   }
