@@ -1,6 +1,15 @@
-var Router = {
-  routes: [],
-  view: $('#view'),
+function Router() {
+  this.routes = []
+  this.view   = $('#view')
+}
+
+Router.prototype = {
+  setContent: function(content, transitionDuration) {
+    var duration = transitionDuration ? transitionDuration : 400
+    this.view.fadeOut(duration, function() {
+      this.view.html(content).fadeIn(duration)
+    }.bind(this))
+  },
 
   error: function() {
     this.setContent('<h1>404 Not Found</h1>')
@@ -10,16 +19,10 @@ var Router = {
     this.setContent('<h1>The backend returned an error:</h1>' + '<code>' + err + '</code>')
   },
 
-  setContent(content, transitionDuration) {
-    var duration = transitionDuration ? transitionDuration : 400
-    this.view.fadeOut(duration, function() {
-      this.view.html(content).fadeIn(duration)
-    }.bind(this))
-  },
-
   route: function(re, handler) {
-    var regex = new RegExp((re.length > 1 ? '/#' : '') + re)
-    this.routes.push({ re, handler })
+    var str   = (re.length > 1 ? '^#' : '^') + re + '/?$'
+    var regex = new RegExp(str)
+    this.routes.push({ re: regex, handler: handler })
 
     return this
   },
@@ -27,6 +30,7 @@ var Router = {
   check: function() {
     var fragment = location.hash
     var matched = false
+    var router = this
 
     this.routes.forEach(function(route) {
       var match = fragment.match(route.re)
@@ -34,7 +38,7 @@ var Router = {
       if (match) {
         matched = true
         match.shift()
-        route.handler.apply({}, match)
+        route.handler.apply(router, match)
       }
     })
 
@@ -61,20 +65,6 @@ var Router = {
 
     return this
   }
+
 }
 
-
-$(function() {
-  'use strict'
-
-  $('body').on('click', 'a.history-link', function(e) {
-    e.preventDefault()
-    Router.transitionTo($(this).attr('href'), $(this).data())
-  })
-
-  $(window).on('popstate', function(e) {
-    Router.check()
-  })
-
-  Router.transitionTo(location.hash)
-})

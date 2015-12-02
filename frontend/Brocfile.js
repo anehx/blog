@@ -19,7 +19,9 @@ var config = 'config'
 
 var libJs = concat('lib', {
   inputFiles: [
-    '**/*.js'
+    'Router.js',
+    'Store.js',
+    'App.js'
   ],
   outputFile: '/lib.js'
 })
