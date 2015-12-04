@@ -1,8 +1,4 @@
-App.router.route('', function() {
-  App.store.getList('blogs', function(data) {
-    data.data.forEach(function(blog) {
-      var username = blog.user.username
-      var name     = blog.name
-    })
+App.router.route('/blog/(\w+)', function() {
+  App.store.query('posts', { blogname: arguments[0] }, function(data) {
   })
 })

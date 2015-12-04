@@ -31,8 +31,8 @@ Router.prototype = {
 
   check: function() {
     var fragment = location.hash
-    var matched = false
-    var router = this
+    var matched  = false
+    var router   = this
 
     this.routes.forEach(function(route) {
       var match = fragment.match(route.re)
@@ -49,19 +49,13 @@ Router.prototype = {
     return this
   },
 
-  transitionTo: function(path, options) {
-    var o = options ? options : { title: null, active: null }
+  transitionTo: function(path) {
+    var url = (config.HASH && path > 1) ? `/#${path}` : path
 
-    history.pushState(o, o.title, path)
+    history.pushState({}, null, url)
 
     $('a.history-link').removeClass('active')
-
-    if (o.active) {
-      $('a.history-link[data-title="' + o.active + '"]').addClass('active')
-    }
-    else {
-      $('a.history-link[href="/' + location.hash + '"]').addClass('active')
-    }
+    $(`a.history-link[href="${path}"]`).addClass('active')
 
     this.check()
 
@@ -70,3 +64,19 @@ Router.prototype = {
 
 }
 
+function Route(router, regex, handler, isPublic) {
+  this.router   = router
+  this.regex    = regex
+  this.handler  = handler
+  this.isPublic = isPublic
+}
+
+Route.prototype.handle = function() {
+  return
+}
+
+Route.prototype.enforceLogin = function() {
+  if (!/token=(.*);?/.test(document.cookie)) {
+    this.router.transitionTo('/login')
+  }
+}
