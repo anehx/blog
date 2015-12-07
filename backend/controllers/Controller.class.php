@@ -1,7 +1,7 @@
 <?php
 
 abstract class Controller {
-    public static function reponse($data, $status, $detail = null) {
+    public static function response($data, $status, $detail = null) {
         header('Content-Type: application/json');
         header('Access-Control-Allow-Origin: *');
 
@@ -13,7 +13,13 @@ abstract class Controller {
         exit;
     }
 
-    public static function handle($request, $params) {
+    public static function handle($params = array()) {
+        $request = array(
+            'method'  => $_SERVER['REQUEST_METHOD'],
+            'body'    => $_REQUEST,
+            'headers' => getallheaders()
+        );
+
         switch ($request['method']) {
             case 'GET':
                 static::get($request, $params);

@@ -1,8 +1,11 @@
 App.router.route('', function() {
-  App.store.getList('blogs', function(data) {
-    data.data.forEach(function(blog) {
-      var username = blog.user.username
-      var name     = blog.name
+  App.store.getList('users', function(data) {
+    var table = '<table>'
+
+    data.data.forEach(function(user) {
+      table += `<tr><td>${user.blogname} by ${user.username}`
     })
+
+    App.router.setContent(table + '</table>')
   })
 })

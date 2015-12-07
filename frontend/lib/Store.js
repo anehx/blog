@@ -1,12 +1,10 @@
-function Store()
-
-Store.prototype = {
+var Store = {
   success: function(data, callback) {
-    if (!data.success) {
-      Router.apiError(data.message)
+    if (data.status === 200) {
+      callback(data)
     }
     else {
-      callback(data)
+      App.router.apiError(`${data.status}: ${data.detail}`)
     }
   },
 
@@ -16,7 +14,7 @@ Store.prototype = {
       url: config.API_URL + '/' + url,
       data: data,
       success: function(data) {
-        this.success(data, callback)
+        Store.success(data, callback)
       }
     })
   },

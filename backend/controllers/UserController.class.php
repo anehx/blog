@@ -7,7 +7,7 @@ class UserController extends Controller {
     protected static function get($request, $params) {
         $users = User::findAll();
 
-        return $users;
+        static::response($users, 200);
     }
 
     protected static function post($request, $params) {

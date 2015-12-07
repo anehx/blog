@@ -11,7 +11,7 @@ class Model {
         return static::$tableName ? static::$tableName : strtolower(get_called_class());
     }
 
-    private static function _cast($type, $variable) {
+    private static function __cast($type, $variable) {
         switch ($type) {
             case 'int':
                 $variable = (int)$variable;
@@ -32,7 +32,7 @@ class Model {
         $this->id = (int)$data['id'];
 
         foreach (static::$fields as $field => $type) {
-            $this->${field} = static::_cast($type, $data[$field]);
+            $this->$field = static::__cast($type, $data[$field]);
         }
     }
 
