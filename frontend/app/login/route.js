@@ -14,7 +14,7 @@ App.router.route('/login', function() {
     )
   }
 
-  $('#view').on('submit', '#login', function(e) {
+  this.view.on('submit', '#login', function(e) {
     e.preventDefault()
 
     var username = $(this).find('[name="username"]')
@@ -26,12 +26,20 @@ App.router.route('/login', function() {
       function(data) {
         if (data.success) {
           localStorage.setItem('user', data.data)
+          var token = btoa(`${data.data.username}:${data.data.password}`)
+
+          $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+              xhr.setRequestHeader('Authorization', `Basic ${token}`)
+            }
+          })
         }
         else {
+          Notify.error('Wrong credentials')
         }
       }
     )
 
-    Router.check()
+    this.transitionTo('/')
   })
 })

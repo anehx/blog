@@ -3,7 +3,9 @@ $(function() {
 
   $('body').on('click', 'a.history-link', function(e) {
     e.preventDefault()
-    App.router.transitionTo($(this).attr('href'), $(this).data())
+    var href = $(this).attr('href')
+
+    App.router.transitionTo((config.HASH && href.length > 1 ? '/#' : '') + href)
   })
 
   $(window).on('popstate', function(e) {
@@ -11,12 +13,9 @@ $(function() {
   })
 
   $.ajaxSetup({
-       beforeSend: function(xhr, settings) {
-         //TODO add auth header
-       },
-       error: function() {
-         App.router.apiError('AJAX call failed.')
-       }
+    error: function() {
+      App.router.apiError('AJAX call failed.')
+    }
   })
 
   App.router.transitionTo(location.hash)

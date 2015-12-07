@@ -39,9 +39,7 @@ Dialog.prototype = {
   },
 
   hide: function() {
-    var el = $(`#dialog-${this.id}`)
-    el.animate({opacity: 0})
-    el.remove()
+    $(`#dialog-${this.id}`).animate({opacity: 0}, function() { $(this).remove() })
   }
 }
 
