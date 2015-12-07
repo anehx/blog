@@ -1,13 +1,11 @@
 <?php
 
-class User {
+require_once __DIR__ . '/Model.class.php';
 
-    public $id;
-
-    public $username;
-
-    public $password;
-
-    public $isSuperuser;
-
+class User extends Model {
+    protected static $fields = array(
+        'username' => 'string',
+        'password' => 'string',
+        'isAdmin'  => 'bool'
+    );
 }
