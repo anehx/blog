@@ -1,19 +1,15 @@
 <?php
 
 class Response {
-	private $_response;
+	public static function output($success, $data, $message = null) {
+		header('Content-Type: application/json');
+		header('Access-Control-Allow-Origin: *');
 
-	public function __construct($success, $data, $message = null) {
-		$this->_response = array(
+		echo json_encode(array(
 			'data'    => $data,
 			'success' => $success,
 			'message' => $message
-		);
-	}
-
-	public function returnResponse() {
-		header('Content-Type: application/json');
-		header('Access-Control-Allow-Origin: *');
-		echo json_encode($this->_response);
+		));
+		exit;
 	}
 }

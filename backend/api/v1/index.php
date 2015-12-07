@@ -21,5 +21,4 @@ switch ($url) {
 		break;
 }
 
-$res = new Response($success, $data, $msg);
-$res->returnResponse();
+Response::output($success, $data, $msg);
