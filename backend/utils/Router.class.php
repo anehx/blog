@@ -10,7 +10,7 @@ class Router {
     public function route($pattern, $callback) {
         $p = $this->base . $pattern;
 
-        $this->routes['/' . preg_quote($p, '/') . '/'] = $callback;
+        $this->routes['/' . preg_quote($p, '/') . '\/?$/'] = $callback;
     }
 
     public function execute($uri) {

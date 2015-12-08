@@ -2,7 +2,15 @@
 
 require_once __DIR__ . '/../utils/DbManager.class.php';
 
+require_once __DIR__ . '/Post.class.php';
+require_once __DIR__ . '/User.class.php';
+require_once __DIR__ . '/Comment.class.php';
+require_once __DIR__ . '/Blog.class.php';
+require_once __DIR__ . '/Category.class.php';
+
 class Model {
+    protected static $fields = array();
+
     protected static $tableName = null;
 
     protected static $ordering = 'id';
@@ -28,20 +36,96 @@ class Model {
         return $variable;
     }
 
-    public function __construct($data) {
-        $this->id = (int)$data['id'];
+    protected static function __checkField($field) {
+        if (!isset(static::$fields[$field])) {
+            throw new Exception(sprintf('Field %s does not exist.', $field));
+        }
+    }
 
-        foreach (static::$fields as $field => $type) {
-            $this->$field = static::__cast($type, $data[$field]);
+    protected static function __validate($field, $value) {
+        static::__checkField($field);
+
+        $attr = static::$fields[$field];
+
+        if (is_null($value) && $attr['required']) {
+            throw new Exception(sprintf('Field %s can not be null.', $field));
+        }
+
+        if ($attr['related']) {
+            if (!call_user_func_array(array($attr['related'], 'find'), array(array('id' => $value)))) {
+                throw new Exception(sprintf('Relation %s with id %d does not exist.', $field, $value));
+            }
+        }
+    }
+
+    public function __construct($data) {
+        $this->id = isset($data['id']) ? (int)$data['id'] : null;
+
+        foreach (static::$fields as $field => $attr) {
+            $value = isset($data[$field]) ? static::__cast($attr['type'], $data[$field]) : null;
+
+            static::__validate($field, $value);
+
+            $this->$field = $value;
         }
     }
 
     public function set($field, $value) {
-        $this->${field} = $value;
+        static::__validate($field, $value);
+
+        $this->$field = $value;
     }
 
     public function get($field) {
-        return $this->${field};
+        static::__checkField($field);
+
+        return $this->$field;
+    }
+
+    public function save() {
+        if (is_null($this->id)) {
+            return $this->create();
+        }
+        else {
+            return $this->update();
+        }
+    }
+
+    public function update() {
+        $fieldNames = array_keys(static::$fields);
+
+        $query = sprintf(
+            'UPDATE %s SET %s WHERE id = :id',
+            static::__getTableName(),
+            join(',', array_map(function($k) { return sprintf('%s = :%s', $k, $k); }, $fieldNames))
+        );
+
+        $stmt= DbManager::prepare($query);
+
+        $stmt->execute((array)$this);
+
+        return $this;
+    }
+
+    public function create() {
+        $fieldNames = array_keys(static::$fields);
+
+        $query = sprintf(
+            'INSERT INTO %s (%s) VALUES (%s)',
+            static::__getTableName(),
+            join(',', $fieldNames),
+            join(',', array_map(function($k) { return ':'.$k; }, $fieldNames))
+        );
+
+        $stmt   = DbManager::prepare($query);
+        $values = (array)$this;
+
+        unset($values['id']);
+
+        $stmt->execute($values);
+        $this->id = DbManager::lastInsertId();
+
+        return $this;
     }
 
     public static function findAll() {
@@ -56,16 +140,25 @@ class Model {
         return array_map(function($row) { return new static($row); }, $records);
     }
 
-    public static function find($criteria = array()) {
+    public static function query($criteria, $limit = null) {
         $query = sprintf(
-            'SELECT * FROM %s WHERE %s LIMIT 1',
+            'SELECT * FROM %s WHERE %s %s',
             self::__getTableName(),
-            join(' AND ', array_map(function($k) { return sprintf('%s = :%s', $k, $k); }, array_keys($criteria)))
+            join(' AND ', array_map(function($k) {
+                return sprintf('%s = :%s', $k, $k);
+            }, array_keys($criteria))),
+            $limit ? 'LIMIT ' . $limit : ''
         );
 
         $stmt = DbManager::prepare($query);
         $stmt->execute($criteria);
 
-        return new static($stmt->fetch());
+        return array_map(function($row) {
+            return new static($row);
+        }, $stmt->fetchAll());
+    }
+
+    public static function find($params) {
+        return static::query($params, 1)[0];
     }
 }

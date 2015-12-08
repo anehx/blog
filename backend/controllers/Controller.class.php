@@ -1,6 +1,6 @@
 <?php
 
-abstract class Controller {
+class Controller {
     public static function response($data, $status, $detail = null) {
         header('Content-Type: application/json');
         header('Access-Control-Allow-Origin: *');
@@ -27,12 +27,23 @@ abstract class Controller {
             case 'POST':
                 static::post($request, $params);
                 break;
-            default:
-                static::get($request, $params);
+            case 'DELETE':
+                static::delete($request, $params);
                 break;
+            default:
+                throw new Exception('No route defined for this method.');
         }
     }
 
-    protected static abstract function get($request, $params);
-    protected static abstract function post($request, $params);
+    protected static function get($request, $params) {
+        throw new Exception('No get handler defined for this route.');
+    }
+
+    protected static function post($request, $params) {
+        throw new Exception('No post handler defined for this route.');
+    }
+
+    protected static function delete($request, $params) {
+        throw new Exception('No delete handler defined for this route.');
+    }
 }
