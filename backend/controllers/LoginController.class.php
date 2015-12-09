@@ -6,12 +6,12 @@ require_once __DIR__ . '/../models/User.class.php';
 class LoginController extends Controller {
     protected static function post($request, $params) {
         try {
-            $user = User::find(array('username' => $request['body']['username']));
+            $user = User::find(array('username' => $request->get('username')));
 
-            if (!$user) {
+            if (!is_a($user, 'User')) {
                 static::response(array(), 400, 'No user found');
             }
-            elseif (password_verify($request['body']['password'], $user->get('password'))) {
+            elseif (password_verify($request->get('password'), $user->get('password'))) {
                 static::response($user, 200);
             }
             else {

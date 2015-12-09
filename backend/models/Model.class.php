@@ -58,7 +58,7 @@ class Model {
         }
     }
 
-    public function __construct($data) {
+    public function __construct($data, $include = null) {
         $this->id = isset($data['id']) ? (int)$data['id'] : null;
 
         foreach (static::$fields as $field => $attr) {
@@ -67,6 +67,19 @@ class Model {
             static::__validate($field, $value);
 
             $this->$field = $value;
+        }
+
+        if ($include) {
+            foreach (explode(',', $include) as $inc) {
+                foreach (static::$fields as $k => $v) {
+                    if ($inc === strtolower($v['related'])) {
+                        $this->$inc = call_user_func_array(
+                            array($v['related'], 'find'),
+                            array(array('id' => $this->$k))
+                        );
+                    }
+                }
+            }
         }
     }
 
@@ -128,7 +141,7 @@ class Model {
         return $this;
     }
 
-    public static function findAll() {
+    public static function findAll($include = null) {
         $query = sprintf(
             'SELECT * FROM %s ORDER BY %s',
             self::__getTableName(),
@@ -137,10 +150,10 @@ class Model {
 
         $records = DbManager::query($query)->fetchAll();
 
-        return array_map(function($row) { return new static($row); }, $records);
+        return array_map(function($row) use ($include) { return new static($row, $include); }, $records);
     }
 
-    public static function query($criteria, $limit = null) {
+    public static function query($criteria, $include = null, $limit = null) {
         $query = sprintf(
             'SELECT * FROM %s WHERE %s %s',
             self::__getTableName(),
@@ -153,13 +166,18 @@ class Model {
         $stmt = DbManager::prepare($query);
         $stmt->execute($criteria);
 
-        return array_map(function($row) {
-            return new static($row);
+        return array_map(function($row) use ($include) {
+            return new static($row, $include);
         }, $stmt->fetchAll());
     }
 
-    public static function find($params) {
-        $filtered = static::query($params, 1);
-        return $filtered[0] || null;
+    public static function find($params, $include = null) {
+        $query = static::query($params, $include, 1);
+
+        if (empty($query)) {
+            throw new Exception(sprintf('No %s with these parameters found.', strtolower(get_called_class())));
+        }
+
+        return $query[0];
     }
 }

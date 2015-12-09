@@ -1,11 +1,10 @@
 App.router.route('', function() {
-  App.store.getList('blogs', function(data) {
-    var table = '<table>'
-
+  App.store.getList('blogs', null, function(data) {
+    var content = ''
     data.data.forEach(function(blog) {
-      table += `<tr><td>${blog.name}`
+      content += `<a href="/blog/${blog.id}" class="history-link">${blog.name}</a><br>`
     })
 
-    App.router.setContent(table + '</table>')
+    App.router.setContent(content)
   })
 })

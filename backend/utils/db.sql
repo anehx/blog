@@ -19,12 +19,12 @@ CREATE TABLE IF NOT EXISTS Category (
 
 CREATE TABLE IF NOT EXISTS Post (
     id         INTEGER PRIMARY KEY,
-    userID     INTEGER NOT NULL,
+    blogID     INTEGER NOT NULL,
     categoryID INTEGER NOT NULL,
     title      VARCHAR NOT NULL,
     content    TEXT    NOT NULL,
     created    INTEGER NOT NULL,
-    FOREIGN KEY(userID)     REFERENCES User(id),
+    FOREIGN KEY(blogID)     REFERENCES Blog(id),
     FOREIGN KEY(categoryID) REFERENCES Category(id)
 );
 

@@ -1,21 +1,12 @@
 var Store = {
-  success: function(data, callback, status) {
-    if (status === 404) {
-      App.router.apiError('404: Route not found')
-    }
-    else {
-      callback(data, status)
-    }
-  },
-
   ajax: function(method, url, data, callback) {
     $.ajax({
       method: method,
       url: config.API_URL + '/' + url,
       data: data,
-      dataType: 'jsonp',
+      dataType: 'json',
       success: function(data, textStatus, jqXHR) {
-        Store.success(data, callback, jqXHR.status)
+        callback(data, jqXHR.status)
       }
     })
   },
@@ -28,22 +19,26 @@ var Store = {
     this.ajax('GET', url, {}, callback)
   },
 
-  getList: function(item, callback) {
-    this.ajaxGet(item, callback)
+  getList: function(item, include, callback) {
+    var inc = include ? `?include=${include}` : ''
+    this.ajaxGet(item + inc, callback)
   },
 
-  get: function(item, id, callback) {
-    var url = item + '/' + id
+  get: function(item, id, include, callback) {
+    var inc = include ? `?include=${include}` : ''
+    var url = `${item}/${id}${inc}`
 
     this.ajaxGet(url, callback)
   },
 
-  query: function(item, queryParams, callback) {
+  query: function(item, queryParams, include, callback) {
     var url = Object.keys(queryParams).reduce(function(url, key, i) {
       if (i) url += '&'
 
       return `${url}queryParams[${key}]=${queryParams[key]}`
     }, item + '?')
+
+    if (include) url += `&include=${include}`
 
     this.ajaxGet(url, callback)
   }

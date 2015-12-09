@@ -3,19 +3,21 @@
 require_once __DIR__ . '/Model.class.php';
 
 class Post extends Model {
+    protected static $ordering = 'created';
+
     protected static $fields = array(
         'categoryID'   => array(
             'type'     => 'int',
             'required' => true,
             'related'  => 'Category'
         ),
-        'userID'       => array(
+        'blogID'       => array(
             'type'     => 'int',
             'required' => true,
-            'related'  => 'User'
+            'related'  => 'Blog'
         ),
         'title'        => array(
-            'type'     => 'int',
+            'type'     => 'string',
             'required' => true,
             'related'  => null
         ),

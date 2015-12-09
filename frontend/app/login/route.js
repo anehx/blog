@@ -19,17 +19,13 @@ App.router.route('/login', function() {
       `${config.API_URL}/login`,
       { username: username, password: password },
       function(data, textStatus, jqXHR) {
-
-        var token = btoa(`${data.data.username}:${data.data.password}`)
+        var token = btoa(`${data.data.username}:${password}`)
 
         var d = new Date()
         d.setTime(d.getTime() + (7*24*60*60*1000)) // expire after 7 days
 
         document.cookie = `token=${token}; expires=${d.toUTCString()}`
-
       }
     )
-
-    App.router.transitionTo('/')
   })
 })

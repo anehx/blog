@@ -5,11 +5,11 @@ require_once __DIR__ . '/../models/Post.class.php';
 
 class PostListController extends Controller {
     protected static function get($request, $params) {
-        if (isset($request['body']['queryParams'])) {
-            $posts = Post::query($request['body']['queryParams']);
+        try {
+            $posts = Post::query($request->get('queryParams'), $request->include);
         }
-        else {
-            $posts = Post::findAll();
+        catch (OutOfBoundsException $e) {
+            $posts = Post::findAll($request->include);
         }
 
         static::response($posts, 200);
@@ -20,10 +20,10 @@ class PostListController extends Controller {
 
         try {
             $post = new Post(array(
-                'userID'     => $request['user']->get('id'),
-                'categoryID' => $request['body']['categoryID'],
-                'title'      => $request['body']['title'],
-                'content'    => $request['body']['content'],
+                'blogID'     => Category::find(array('id' => $request->user->get('id'))),
+                'categoryID' => $request->get('categoryID'),
+                'title'      => $request->get('title'),
+                'content'    => $request->get('content'),
                 'created'    => time()
             ));
 
