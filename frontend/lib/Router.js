@@ -20,7 +20,7 @@ Router.prototype = {
   },
 
   route: function(re, handler) {
-    var prefix = '^' + (re.length > 1 && config.HASH ? '#' : '')
+    var prefix = '^' + (re.length > 1 && config.HASH ? '/#' : '')
     var suffix = '/?$'
 
     var regex = new RegExp(prefix + re + suffix)
@@ -30,7 +30,7 @@ Router.prototype = {
   },
 
   check: function() {
-    var fragment = location.hash
+    var fragment = location.pathname + location.hash
     var matched  = false
     var router   = this
 
@@ -50,14 +50,14 @@ Router.prototype = {
   },
 
   transitionTo: function(path) {
-    var url = (config.HASH && path > 1) ? `/#${path}` : path
+    var url = (config.HASH && path.length > 1 && !/^\/#/.test(path)) ? `/#${path}` : path
 
     history.pushState({}, null, url)
 
+    this.check()
+
     $('a.history-link').removeClass('active')
     $(`a.history-link[href="${path}"]`).addClass('active')
-
-    this.check()
 
     return this
   }

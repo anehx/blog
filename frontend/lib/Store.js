@@ -1,10 +1,10 @@
 var Store = {
-  success: function(data, callback) {
-    if (data.status === 200) {
-      callback(data)
+  success: function(data, callback, status) {
+    if (status === 404) {
+      App.router.apiError('404: Route not found')
     }
     else {
-      App.router.apiError(`${data.status}: ${data.detail}`)
+      callback(data, status)
     }
   },
 
@@ -13,8 +13,9 @@ var Store = {
       method: method,
       url: config.API_URL + '/' + url,
       data: data,
-      success: function(data) {
-        Store.success(data, callback)
+      dataType: 'jsonp',
+      success: function(data, textStatus, jqXHR) {
+        Store.success(data, callback, jqXHR.status)
       }
     })
   },
@@ -41,7 +42,7 @@ var Store = {
     var url = Object.keys(queryParams).reduce(function(url, key, i) {
       if (i) url += '&'
 
-      return url + key + '=' + queryParams[key]
+      return `${url}queryParams[${key}]=${queryParams[key]}`
     }, item + '?')
 
     this.ajaxGet(url, callback)

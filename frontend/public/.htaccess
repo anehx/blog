@@ -1,0 +1,5 @@
+Options +FollowSymLinks
+RewriteEngine On
+RewriteBase /
+RewriteRule ^(js|css|img|svg)($|/) - [L]
+RewriteRule ^(.*)$ index.html [L]
