@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS Post (
     categoryID INTEGER NOT NULL,
     title      VARCHAR NOT NULL,
     content    TEXT    NOT NULL,
+    created    INTEGER NOT NULL,
     FOREIGN KEY(userID)     REFERENCES User(id),
     FOREIGN KEY(categoryID) REFERENCES Category(id)
 );

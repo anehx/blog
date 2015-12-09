@@ -2,11 +2,11 @@
 
 require_once __DIR__ . '/../utils/DbManager.class.php';
 
-require_once __DIR__ . '/Post.class.php';
-require_once __DIR__ . '/User.class.php';
-require_once __DIR__ . '/Comment.class.php';
 require_once __DIR__ . '/Blog.class.php';
 require_once __DIR__ . '/Category.class.php';
+require_once __DIR__ . '/Comment.class.php';
+require_once __DIR__ . '/Post.class.php';
+require_once __DIR__ . '/User.class.php';
 
 class Model {
     protected static $fields = array();
@@ -159,6 +159,7 @@ class Model {
     }
 
     public static function find($params) {
-        return static::query($params, 1)[0];
+        $filtered = static::query($params, 1);
+        return $filtered[0] || null;
     }
 }

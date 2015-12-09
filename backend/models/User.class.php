@@ -5,7 +5,7 @@ require_once __DIR__ . '/Model.class.php';
 class User extends Model {
     protected static $fields = array(
         'username'     => array(
-            'type'     => 'int',
+            'type'     => 'string',
             'required' => true,
             'related'  => null
         ),

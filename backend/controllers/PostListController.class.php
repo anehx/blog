@@ -16,8 +16,21 @@ class PostListController extends Controller {
     }
 
     protected static function post($request, $params) {
-        $post = new Post($request['body']);
+        static::authorize($request);
 
-        static::response($post, 200);
+        try {
+            $post = new Post(array(
+                'userID'     => $request['user']->get('id'),
+                'categoryID' => $request['body']['categoryID'],
+                'title'      => $request['body']['title'],
+                'content'    => $request['body']['content'],
+                'created'    => time()
+            ));
+
+            static::response($post->save(), 201);
+        }
+        catch (Exception $e) {
+            static::response(array(), 500, $e->getMessage());
+        }
     }
 }

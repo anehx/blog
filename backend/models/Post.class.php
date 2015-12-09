@@ -23,6 +23,11 @@ class Post extends Model {
             'type'     => 'string',
             'required' => true,
             'related'  => null
+        ),
+        'created'      => array(
+            'type'     => 'int',
+            'required' => true,
+            'related'  => null
         )
     );
 }
