@@ -8,6 +8,10 @@
   font-size: 16px
   box-sizing: border-box
 
+  &.error
+    border: thin solid darken($error-color, 40%)
+    box-shadow: 0 0 5px 0px darken($error-color, 40%)
+
   &:focus
     border: thin solid $primary-color
     box-shadow: 0 0 5px 0px $primary-color

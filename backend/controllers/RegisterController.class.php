@@ -7,12 +7,21 @@ class RegisterController extends Controller {
     protected static function post($request, $params) {
         try {
             $user = new User(array(
-                'username' => $request['body']['username'],
-                'password' => password_hash($request['body']['password'], PASSWORD_BCRYPT),
+                'username' => $request->get('username'),
+                'password' => password_hash($request->get('password'), PASSWORD_BCRYPT),
                 'isAdmin'  => false
             ));
+            $user->save();
 
-            static::response($user->save(), 201);
+            $blog = new Blog(array(
+                'userID' => $user->id,
+                'name'   => $request->get('blogname')
+            ));
+            $blog->save();
+
+            $user->blog = $blog;
+
+            static::response($user, 201);
         }
         catch (Exception $e) {
             static::response(array(), 500, $e->getMessage());
