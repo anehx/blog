@@ -3,6 +3,12 @@ App.router.protectedRoute('/posts/(\\d+)/edit', function() {
 
   App.store.get('posts', arguments[0], 'category,blog', function(data) {
     var post = data.data
+    var user = App.getUser()
+
+    if (post.blogID !== user.blog.id) {
+      App.router.noPermission()
+      return
+    }
 
     var content = `
     <form id="edit-form">

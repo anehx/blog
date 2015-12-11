@@ -38,7 +38,7 @@ App.router.route('/posts/(\\d+)', function() {
             url: `${config.API_URL}/posts/${params.id}`,
             method: 'DELETE',
             success: function(data) {
-              App.router.transitionTo('/')
+              App.router.transitionTo('/' + App.getUser().blog.id)
               Notify.success('Post erfolgreich gelöscht')
             }
           })

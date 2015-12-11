@@ -22,7 +22,27 @@ Router.prototype = {
   },
 
   error: function() {
-    this.setContent('<h1>404 Not Found</h1>')
+    this.setContent(`
+      <div class="page-error">
+        <div>
+          <h1>404</h1>
+          <h2>Seite nicht gefunden!</h2>
+          <a href="/" class="history-link">Zurück zur Startseite</a>
+        </div>
+      </div>
+    `)
+  },
+
+  noPermission: function() {
+    this.setContent(`
+      <div class="page-error">
+        <div>
+          <h1>403</h1>
+          <h2>Fehlende Berechtigung!</h2>
+          <a href="/" class="history-link">Zurück zur Startseite</a>
+        </div>
+      </div>
+    `)
   },
 
   apiError: function(err) {
@@ -49,7 +69,7 @@ Router.prototype = {
 
       if ($('#my-blog').length === 0) {
         $('ul.nav-side-list').prepend(
-          `<li class="nav-side-list-item" id="my-blog"><a class="history-link" href="/${user.id}/"><i class="fa fa-rss"></i> Mein Blog</a></li>`
+          `<li class="nav-side-list-item" id="my-blog"><a class="history-link" href="/${user.blog.id}/"><i class="fa fa-rss"></i> Mein Blog</a></li>`
         )
       }
 
@@ -60,6 +80,10 @@ Router.prototype = {
     }
     else {
       $('#my-blog').hide()
+      $('nav a.history-link[href="/posts/new/"]').parent().hide()
+      $('nav a.history-link[href="/admin/"]').parent().hide()
+      $('nav a.history-link[href="/logout/"]').parent().hide()
+      $('nav a.history-link[href="/login/"]').parent().show()
     }
   },
 

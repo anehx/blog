@@ -20,6 +20,7 @@ App.router.route('/login', function() {
       { username: username, password: password },
       function(data, textStatus, jqXHR) {
         var token = btoa(`${data.data.username}:${password}`)
+
         App.setUser(data.data)
 
         var d = new Date()
