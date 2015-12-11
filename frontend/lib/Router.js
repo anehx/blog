@@ -125,6 +125,7 @@ Router.prototype = {
 
   transitionTo: function(path) {
     var url = (config.HASH && path.length > 1 && !/^\/#/.test(path)) ? `/#${path}` : path
+    this.view.unbind()
 
     history.pushState({}, null, url)
 

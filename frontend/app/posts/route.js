@@ -26,7 +26,7 @@ App.router.route('/posts/(\\d+)', function() {
       <a href="/${post.blogID}" class="history-link">Zurück zum Blog</a><br>
     `
 
-    $('body').on('click', '#delete-post', function(e) {
+    App.router.view.on('click', '#delete-post', function(e) {
       e.preventDefault()
 
       ConfirmDialog(
