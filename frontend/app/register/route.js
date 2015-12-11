@@ -2,8 +2,9 @@ App.router.route('/register', function() {
   this.setContent(`
     <div class="login">
       <div>
-        <form id="register" class="login-form">
+        <form id="register" class="register-form">
           <input name="username"  placeholder="Benutzername" type="text" class="form-control" />
+          <input name="blogname"  placeholder="Blogname" type="text" class="form-control" />
           <input name="password"  placeholder="Passwort" type="password" class="form-control" />
           <input name="password2" placeholder="Passwort wiederholen" type="password" class="form-control" />
           <button type="submit" class="btn btn--primary">Registrieren</button>
@@ -26,7 +27,7 @@ App.router.route('/register', function() {
         password: password
       },
       function(data) {
-        // do stuff
+        // TODO
       }
     )
   })

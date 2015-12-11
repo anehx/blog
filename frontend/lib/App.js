@@ -3,7 +3,14 @@ var App = {
   store:  Store,
 
   getUser: function() {
-    return JSON.parse(localStorage.getItem('user'))
+    var user = localStorage.getItem('user')
+
+    if (user) {
+      return JSON.parse(user)
+    }
+    else {
+      return null
+    }
   },
 
   setUser: function(user) {
