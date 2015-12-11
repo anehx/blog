@@ -38,7 +38,7 @@ App.router.protectedRoute('/posts/new', function() {
           </tr>
         </table>
         <div class="buttons">
-          <a href="/" class="history-link"><button class="btn btn--default">Abbrechen</button></a>
+          <a href="/${App.getUser().blog.id}" class="history-link"><button class="btn btn--default">Abbrechen</button></a>
           <button class="btn btn--primary">Speichern</button>
         </div>
       </form>

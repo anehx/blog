@@ -13,7 +13,7 @@ var Store = {
           Notify.error(jqXHR.responseJSON.detail)
         }
         else if (jqXHR.status === 404) {
-          App.router.apiError('404: Route not found')
+          App.router.error()
         }
       }
     })

@@ -1,11 +1,14 @@
 App.router.route('/login', function() {
   this.setContent(`
     <div class="login">
-      <form id="login" class="login-form">
-        <input name="username" type="text"     placeholder="Username" class="form-control" />
-        <input name="password" type="password" placeholder="Password" class="form-control" />
-        <button type="submit" class="btn btn--default">Login</button>
-      </form>
+      <div>
+        <form id="login" class="login-form">
+          <input name="username" type="text"     placeholder="Username" class="form-control" />
+          <input name="password" type="password" placeholder="Password" class="form-control" />
+          <button type="submit" class="btn btn--primary">Login</button>
+        </form>
+        <a href="/register" class="history-link">Sie haben noch keinen Account?</a>
+      </div>
     </div>
   `)
 
