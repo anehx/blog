@@ -6,7 +6,7 @@ require_once __DIR__ . '/../models/Post.class.php';
 class PostController extends Controller {
     protected static function get($request, $params) {
         try {
-            $post = Post::find(array('id' => $params[0]), $request->include);
+            $post = Post::find(array('id' => $params), $request->include);
             static::response($post, 200);
         }
         catch (Exception $e) {
@@ -18,7 +18,7 @@ class PostController extends Controller {
         static::authorize($request);
 
         try {
-            $post = Post::find(array('id' => $params[0]), 'blog');
+            $post = Post::find(array('id' => $params), 'blog');
 
             if ($post->blog->userID === $request->user->id) {
                 $post->set('categoryID', $request->get('categoryID'));
@@ -41,7 +41,7 @@ class PostController extends Controller {
         static::authorize($request);
 
         try {
-            $post = Post::find(array('id' => $params[0]), 'blog');
+            $post = Post::find(array('id' => $params), 'blog');
 
             if ($post->blog->userID === $request->user->id) {
                 $post->delete();
