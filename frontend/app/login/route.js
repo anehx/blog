@@ -3,7 +3,7 @@ App.router.route('/login', function() {
     <div class="login">
       <div>
         <form id="login" class="login-form">
-          <input name="username" type="text"     placeholder="Username" class="form-control" />
+          <input name="username" type="text" placeholder="Benutzername" class="form-control" />
           <input name="password" type="password" placeholder="Password" class="form-control" />
           <button type="submit" class="btn btn--primary">Login</button>
         </form>

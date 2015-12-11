@@ -69,7 +69,7 @@ Router.prototype = {
 
       if ($('#my-blog').length === 0) {
         $('ul.nav-side-list').prepend(
-          `<li class="nav-side-list-item" id="my-blog"><a class="history-link" href="/${user.blog.id}"><i class="fa fa-rss"></i> Mein Blog</a></li>`
+          `<li class="nav-side-list-item" id="my-blog"><a class="history-link" href="/${user.blog.id}"><i class="fa fa-rss"></i><span>Mein Blog</span></a></li>`
         )
       }
 

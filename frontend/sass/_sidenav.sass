@@ -66,7 +66,7 @@
   line-height: 40px
   overflow: hidden
   transition: width .5s ease-out
-  font-size: 1.5em
+  font-size: 25px
 
   a, p
     margin-left: 10px
@@ -78,30 +78,35 @@
 
 .nav-side-list
   display: flex
-  opacity: 0
   flex-direction: column
   align-items: flex-start
   flex-grow: 1
-  transition: opacity .5s ease
-  pointer-events: none
-
-.nav-side--expand .nav-side-list
-  opacity: 1
-  pointer-events: initial
 
 .nav-side-list-item
   width: 100%
-  > a
+  a
+    font-size: 16px
     overflow-x: hidden
     white-space: nowrap
-    display: block
-    padding: 10px 15px
+    display: flex
+    flex-direction: row
+    align-items: center
+    justify-content: flex-start
+    padding: 15px 15px
     text-decoration: none
     transition: background-color .3s ease, color .3s ease
     color: #222
+
     &:hover
       background-color: #ddd
       color: #16ABD5
     &:active, &.active
       background-color: #aaa
       color: #ddd
+
+  i
+    flex-shrink: 0
+    width: 30px
+    text-align: center
+    font-size: 28px
+    margin-right: 15px
