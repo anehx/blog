@@ -1,5 +1,4 @@
 @import 'sidenav'
-@import 'footer'
 @import 'post'
 @import 'login'
 @import 'form'
@@ -14,7 +13,7 @@ html
   height: 100vh
 
 body
-  min-height: 100vh
+  height: 100%
   color: #222
   font-family: 'Raleway', 'OpenSans', Helvetica, sans-serif
   font-weight: 300
@@ -46,6 +45,8 @@ body
 .page-content
   flex-grow: 1
   padding: 20px
+  height: 100%
+  overflow-y: auto
 
 h1, h2, h3, h4, h5
   font-weight: 300

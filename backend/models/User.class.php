@@ -3,6 +3,13 @@
 require_once __DIR__ . '/Model.class.php';
 
 class User extends Model {
+    /**
+     *
+     * Fields of the model
+     *
+     * @static
+     * @property array $fields
+     */
     protected static $fields = array(
         'username'     => array(
             'type'     => 'string',

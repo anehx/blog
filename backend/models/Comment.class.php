@@ -3,6 +3,13 @@
 require_once __DIR__ . '/Model.class.php';
 
 class Comment extends Model {
+    /**
+     *
+     * Fields of the model
+     *
+     * @static
+     * @property array $fields
+     */
     protected static $fields = array(
         'userID'       => array(
             'type'     => 'int',

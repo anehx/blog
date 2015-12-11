@@ -7,6 +7,14 @@ var Store = {
       dataType: 'json',
       success: function(data, textStatus, jqXHR) {
         callback(data, jqXHR.status)
+      },
+      error: function(jqXHR) {
+        if (jqXHR.responseJSON) {
+          Notify.error(jqXHR.responseJSON.detail)
+        }
+        else if (jqXHR.status === 404) {
+          App.router.apiError('404: Route not found')
+        }
       }
     })
   },

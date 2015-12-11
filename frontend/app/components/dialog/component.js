@@ -56,7 +56,7 @@ Dialog.prototype = {
  * @return {void}
  *
 **/
-function ConfirmDialog(title, content, btnContent, callback) {
+function ConfirmDialog(title, content, btnContent, params, callback) {
   var buttons = `
     <button class="btn btn-default close-dialog" type="button" id>Abbrechen</button>
     <button class="btn btn-primary confirm"      type="button">${btnContent}</button>
@@ -64,8 +64,8 @@ function ConfirmDialog(title, content, btnContent, callback) {
 
   var dialog = new Dialog(title, content, buttons)
 
-  $(`#dialog-${dialog.id}`).on('click', `.confirm`, function() {
+  $(`#dialog-${dialog.id}`).on('click', `.confirm`, { params: params }, function(e) {
     dialog.hide()
-    callback()
+    callback(e.data.params)
   })
 }

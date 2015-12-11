@@ -46,7 +46,7 @@ class Controller {
 
     public static function handle($params = array()) {
         header('Access-Control-Allow-Origin: *');
-        header('Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS');
+        header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
         header('Access-Control-Allow-Headers: Content-Type, Authorization, User-Agent');
 
         $request = new Request();
@@ -60,6 +60,9 @@ class Controller {
                 break;
             case 'DELETE':
                 static::delete($request, $params);
+                break;
+            case 'PUT':
+                static::put($request, $params);
                 break;
             case 'OPTIONS':
                 static::response(array(), 203);
@@ -76,6 +79,10 @@ class Controller {
 
     protected static function post($request, $params) {
         static::response(array(), 404, 'No POST handler defined for this route.');
+    }
+
+    protected static function put($request, $params) {
+        static::response(array(), 404, 'No PUT handler defined for this route.');
     }
 
     protected static function delete($request, $params) {

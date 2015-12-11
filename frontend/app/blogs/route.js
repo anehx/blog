@@ -1,4 +1,4 @@
-App.router.route('/blog/(\\d+)', function() {
+App.router.route('/(\\d+)', function() {
   App.store.query('posts', { blogID: arguments[0] }, 'category', function(data) {
     var content = ''
     data.data.forEach(function(post) {

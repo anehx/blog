@@ -19,18 +19,20 @@ class PostListController extends Controller {
         static::authorize($request);
 
         try {
-            $post = new Post(array(
-                'blogID'     => Category::find(array('id' => $request->user->get('id'))),
+            $data = array(
                 'categoryID' => $request->get('categoryID'),
+                'blogID'     => Blog::find(array('id' => $request->user->id))->get('id'),
                 'title'      => $request->get('title'),
                 'content'    => $request->get('content'),
                 'created'    => time()
-            ));
+            );
 
-            static::response($post->save(), 201);
+            $post = new Post($data);
+
+            static::response($post->save(), 201, '');
         }
         catch (Exception $e) {
-            static::response(array(), 500, $e->getMessage());
+            static::response(array(), 400, $e->getMessage());
         }
     }
 }
