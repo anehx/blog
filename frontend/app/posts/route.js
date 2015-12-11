@@ -4,18 +4,12 @@ App.router.route('/posts/(\\d+)', function() {
     var date = new Date(post.created * 1000)
     var dateStr = `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`
     var timeStr = `${date.getHours()}:${date.getMinutes()}`
-
-    var content = `
-      <h1>${post.title}</h1>
-      <em>In Kategorie ${post.category.name} am ${dateStr} um ${timeStr}</em>
-      <p>${post.content}</p>
-      <a href="/${post.blogID}" class="history-link">Zurück zum Blog</a><br>
-    `
+    var icons = ''
 
     var user = App.getUser()
 
-    if (user && user.id == post.blog.userID) {
-      content += `
+    if (user && user.blog.id == post.blog.id) {
+      icons += `
         <a href="/posts/${post.id}/edit" class="history-link" title="Post bearbeiten">
           <i class="fa fa-pencil"></i>
         </a>
@@ -24,6 +18,13 @@ App.router.route('/posts/(\\d+)', function() {
         </a>
       `
     }
+
+    var content = `
+      <h1>${post.title}<small>${icons}</small></h1>
+      <em>In Kategorie ${post.category.name} am ${dateStr} um ${timeStr}</em>
+      <p>${post.content}</p>
+      <a href="/${post.blogID}" class="history-link">Zurück zum Blog</a><br>
+    `
 
     $('body').on('click', '#delete-post', function(e) {
       e.preventDefault()

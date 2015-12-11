@@ -28,7 +28,8 @@ App.router.route('/login', function() {
 
         document.cookie = `token=${token}; expires=${d.toUTCString()}`
 
-        App.router.transitionTo('/')
+        Notify.success('Erfolgreich eingeloggt')
+        App.router.transitionTo('/' + data.data.blog.id)
       }
     )
   })

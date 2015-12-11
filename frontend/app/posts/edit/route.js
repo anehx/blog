@@ -18,7 +18,7 @@ App.router.protectedRoute('/posts/(\\d+)/edit', function() {
       </div>
       <div class="form-group">
         <label for="content">Inhalt:</label>
-        <textarea name="content" id="content" class="form-control">${post.content}"</textarea>
+        <textarea name="content" id="content" class="form-control">${post.content}</textarea>
       </div>
     `
     App.store.getList('categories', null, function(data) {
