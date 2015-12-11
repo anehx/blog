@@ -23,7 +23,7 @@ App.router.route('/posts/(\\d+)', function() {
       <h1>${post.title}<small>${icons}</small></h1>
       <em>In Kategorie ${post.category.name} am ${dateStr} um ${timeStr}</em>
       <p>${post.content}</p>
-      <a href="/${post.blogID}" class="history-link">Zurück zum Blog</a><br>
+      <a href="/${post.blogID}" class="history-link link-prefix">Zurück zum Blog</a><br>
     `
 
     App.router.view.on('click', '#delete-post', function(e) {

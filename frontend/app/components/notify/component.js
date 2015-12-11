@@ -1,5 +1,5 @@
 var Notify = {
-  timeout: 10000,
+  timeout: 5000,
 
   raise: function(type, message) {
     var id = btoa(new Date())
@@ -11,11 +11,11 @@ var Notify = {
     `).fadeIn(300)
 
     $('#notifications').on('click', `#notify-${id}`, function() {
-      $(this).fadeOut(300, function() { $(this).remove() })
+      wipeOut(this)
     })
 
     setTimeout(function() {
-      $(`#notify-${id}`).fadeOut(300, function() { $(this).remove() })
+      wipeOut($(`#notify-${id}`))
     }, this.timeout)
   },
 
@@ -30,4 +30,12 @@ var Notify = {
   info: function(message) {
     this.raise('info', message)
   }
+}
+
+function wipeOut(el) {
+  $(el).animate({'margin-left': '-50px', 'margin-right': '70px'}, 'normal', function() {
+    $(this).animate({'margin-left': '300px', 'margin-right': '-300px'}, 'fast', function() {
+      $(this).remove()
+    })
+  })
 }

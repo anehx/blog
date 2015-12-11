@@ -1,3 +1,4 @@
+@import 'colors'
 @import 'sidenav'
 @import 'post'
 @import 'login'
@@ -62,3 +63,36 @@ code
 .hide
   display: none
   visibility: 0
+
+a
+  color: $primary-color
+  text-decoration: none
+  transition: color .3s ease
+
+  &:hover
+    color: darken($primary-color, 10%)
+
+.link-affix
+  display: inline-block
+  transition: padding .3s ease
+
+a.link-prefix::before
+  @extend .link-affix
+  content: '➔'
+  transform: rotate(180deg)
+  padding-right: 4px
+  padding-left:  4px
+
+a.link-prefix:hover::before
+  padding-right: 0px
+  padding-left:  8px
+
+a.link-postfix::after
+  @extend .link-affix
+  content: '➔'
+  padding-right: 4px
+  padding-left:  4px
+
+a.link-postfix:hover::after
+  padding-right: 0px
+  padding-left:  8px

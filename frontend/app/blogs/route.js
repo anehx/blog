@@ -7,10 +7,12 @@ App.router.route('/(\\d+)', function() {
       var timeStr = `${date.getHours()}:${date.getMinutes()}`
       content += `
         <section class="post" id="post-${post.id}">
-          <h1>${post.title}</h1>
+          <h1>
+            <a href="/posts/${post.id}" class="history-link">${post.title}</a>
+          </h1>
           <em>In Kategorie ${post.category.name} am ${dateStr} um ${timeStr}</em>
           <p>${truncate(post.content, 200)}</p>
-          <a href="/posts/${post.id}" class="history-link">Mehr lesen</a>
+          <a href="/posts/${post.id}" class="history-link link-postfix">Weiterlesen</a>
         </section>
       `
     })

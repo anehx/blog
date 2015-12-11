@@ -2,22 +2,32 @@
   position: absolute
   right: 0
   top: 0
-  width: 250px
-  padding: 10px
+  width: 320px
+  padding: 20px 0 0 50px
   pointer-events: none
+  overflow-x: hidden
 
 .notify
   pointer-events: all
-  padding: 5px
+  padding: 15px
   cursor: pointer
+  margin-bottom: 20px
+  margin-right: 20px
   border-radius: 5px
-  margin-bottom: 10px
+  border-width: 1px
+  border-style: solid
 
   &--error
-    background-color: red
+    background-color: $error-color
+    color: darken($error-color, 50%)
+    border-color: darken($error-color, 5%)
 
   &--success
-    background-color: green
+    background-color: $success-color
+    color: darken($success-color, 50%)
+    border-color: darken($success-color, 5%)
 
   &--info
-    background-color: blue
+    background-color: $info-color
+    color: darken($info-color, 50%)
+    border-color: darken($info-color, 5%)
