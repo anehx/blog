@@ -1,6 +1,6 @@
 App.router.route('/(\\d+)', function() {
   App.store.query('posts', { blogID: arguments[0] }, 'category', function(data) {
-    var content = ''
+    var content = '<div class="post-list">'
     data.data.forEach(function(post) {
       var date = new Date(post.created * 1000)
       var dateStr = `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`
@@ -16,6 +16,6 @@ App.router.route('/(\\d+)', function() {
         </section>
       `
     })
-    App.router.setContent(content)
+    App.router.setContent(content + '</div>')
   })
 })

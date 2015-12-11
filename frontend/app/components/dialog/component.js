@@ -67,8 +67,8 @@ Dialog.prototype = {
  */
 function ConfirmDialog(title, content, btnContent, params, callback) {
   var buttons = `
-    <button class="btn btn-default close-dialog" type="button">Abbrechen</button>
-    <button class="btn btn-primary confirm"      type="button">${btnContent}</button>
+    <button class="btn btn--default close-dialog" type="button">Abbrechen</button>
+    <button class="btn btn--primary confirm"      type="button">${btnContent}</button>
   `
 
   var dialog = new Dialog(title, content, buttons)

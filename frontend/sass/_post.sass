@@ -1,15 +1,42 @@
+.post-list > .post
+  border: thin solid #eee
+  box-shadow: 0 0 3px 1px rgba(0, 0, 0, .2)
+  padding: 20px
+
 .post
   margin: 0 auto 20px
-  border: thin solid #eee
   border-radius: 5px
   width: 900px
-  padding: 20px
-  box-shadow: 0 0 3px 1px rgba(0, 0, 0, .2)
-  transition: transform .3s ease
+  padding: 0 20px
+  position: relative
+
+  table
+    width: 100%
+
+    tr > td
+      padding-bottom: 10px
+      vertical-align: top
+
+      .form-control
+        width: 100%
+
+      &:first-child
+        width: 15%
+
+  .icons
+    position: absolute
+    line-height: 47px
+    height: 47px
+    right: 20px
+    top: 0
+
+    a
+      font-size: 25px
 
   h1
     margin-bottom: 5px
     font-weight: bold
+    font-size: 40px
 
     a
       color: #222

@@ -19,11 +19,19 @@ App.router.route('/posts/(\\d+)', function() {
       `
     }
 
+    var paragraphs = post.content.split('\n').join('</p><p>')
+
     var content = `
-      <h1>${post.title}<small>${icons}</small></h1>
-      <em>In Kategorie ${post.category.name} am ${dateStr} um ${timeStr}</em>
-      <p>${post.content}</p>
-      <a href="/${post.blogID}" class="history-link link-prefix">Zurück zum Blog</a><br>
+      <div class="post">
+        <h1>${post.title}</h1>
+        <div class="icons">${icons}</div>
+        <em>In Kategorie ${post.category.name} am ${dateStr} um ${timeStr}</em>
+        <p>${paragraphs}</p>
+        <a href="/${post.blogID}" class="history-link link-prefix">Zurück zum Blog</a><br>
+        <hr>
+      </div>
+      <div class="comments">
+      </div>
     `
 
     App.router.view.on('click', '#delete-post', function(e) {

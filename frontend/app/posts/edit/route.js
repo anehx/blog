@@ -11,15 +11,17 @@ App.router.protectedRoute('/posts/(\\d+)/edit', function() {
     }
 
     var content = `
-    <form id="edit-form">
-      <div class="form-group">
-        <label for="title">Titel:</label>
-        <input type="text" name="title" id="title" class="form-control" value="${post.title}">
-      </div>
-      <div class="form-group">
-        <label for="content">Inhalt:</label>
-        <textarea name="content" id="content" class="form-control">${post.content}</textarea>
-      </div>
+    <div class="post">
+      <form id="edit-form">
+        <table>
+          <tr>
+            <td>
+              <label for="title">Titel:</label>
+            </td>
+            <td>
+              <input type="text" name="title" id="title" class="form-control" value="${post.title}">
+            </td>
+          </tr>
     `
     App.store.getList('categories', null, function(data) {
       var select = ''
@@ -28,14 +30,31 @@ App.router.protectedRoute('/posts/(\\d+)/edit', function() {
         select += `<option value="${category.id}" ${sel}>${category.name}</option>`
       })
       content += `
-        <div class="form-group">
-          <label for="category">Kategorie:</label>
-          <select id="category" name="category" class="form-control">
-            ${select}
-          </select>
-        </div>
-        <button class="btn btn--primary">Speichern</button>
-      </form>`
+            <tr>
+              <td>
+                <label for="category">Kategorie:</label>
+              </td>
+              <td>
+                <select id="category" name="category" class="form-control">
+                  ${select}
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="content">Inhalt:</label>
+              </td>
+              <td>
+                <textarea name="content" id="content" class="form-control">${post.content}</textarea>
+              </td>
+            </tr>
+          </table>
+          <div class="buttons">
+            <a href="/posts/${post.id}" class="history-link"><button class="btn btn--default">Abbrechen</button></a>
+            <button class="btn btn--primary">Speichern</button>
+          </div>
+        </form>
+      </div>`
       App.router.setContent(content)
     })
   })
