@@ -2,9 +2,9 @@ App.router.route('/register', function() {
   this.setContent(`
     <div class="login">
       <div>
-        <form id="register" class="register-form">
-          <input name="username"  placeholder="Benutzername" type="text" class="form-control" />
+        <form id="register" class="register-form" autocomplete="off">
           <input name="blogname"  placeholder="Blogname" type="text" class="form-control" />
+          <input name="username"  placeholder="Benutzername" type="text" class="form-control" />
           <input name="password"  placeholder="Passwort" type="password" class="form-control" />
           <input name="password2" placeholder="Passwort wiederholen" type="password" class="form-control" />
           <button type="submit" class="btn btn--primary">Registrieren</button>
@@ -14,36 +14,47 @@ App.router.route('/register', function() {
     </div>
   `)
 
+  this.view.on('blur', 'input[name="blogname"]', function(e) {
+    validateBlogname($(this))
+  })
+
+  this.view.on('blur', 'input[name="password2"]', function(e) {
+    var password = App.router.view.find('input[name="password"]')
+    validatePasswordRepeat($(this), password.val())
+  })
+
+  this.view.on('blur', 'input[name="password"]', function(e) {
+    var password2 = App.router.view.find('input[name="password2"]')
+    validatePassword($(this))
+
+    if (password2.val()) {
+      validatePasswordRepeat(password2, $(this).val())
+    }
+  })
+
+  this.view.on('blur', 'input[name="username"]', function(e) {
+    validateUsername($(this))
+  })
+
   this.view.on('submit', '#register', function(e) {
     e.preventDefault()
-
-    var valid = true
 
     var username  = $(this).find('[name="username"]')
     var blogname  = $(this).find('[name="blogname"]')
     var password  = $(this).find('[name="password"]')
     var password2 = $(this).find('[name="password2"]')
 
-    if (blogname.val().length < 1) {
-      blogname.addClass('error')
-    }
+    validateBlogname(blogname)
+    validateUsername(username)
+    validatePassword(password)
+    validatePasswordRepeat(password2, password.val())
 
-    if (!/^[A-Za-z0-9]*$/.test(username.val()) || username.val().length < 4) {
-      username.addClass('error')
-      valid = false
-    }
-
-    if (password.val().length < 6) {
-      password.addClass('error')
-      valid = false
-    }
-
-    if (password2.val() !== password.val() || password2.val().length < 6) {
-      password2.addClass('error')
-      valid = false
-    }
-
-    if (valid) {
+    if (!(
+      username.hasClass('error') ||
+      blogname.hasClass('error') ||
+      password.hasClass('error') ||
+      password2.hasClass('error')
+    )) {
       $.post(
         `${config.API_URL}/register`,
         {

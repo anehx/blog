@@ -81,17 +81,17 @@ App.router.route('/posts/(\\d+)', function() {
       App.router.setContent(content + '</div></div></div>')
     })
 
+    App.router.view.on('blur', 'textarea[name="comment-text"]', function(e) {
+      validateComment($(this))
+    })
+
     App.router.view.on('submit', '#comment-form', function(e) {
       e.preventDefault()
-      var valid = true
-      var text  = $('textarea[name="comment-text"]')
+      var text = $('textarea[name="comment-text"]')
 
-      if (text.val().length < 1) {
-        text.addClass('error')
-        valid = false
-      }
+      validateComment(text)
 
-      if (valid) {
+      if (!text.hasClass('error')) {
         $.post(
           `${config.API_URL}/comments?include=user`,
           {

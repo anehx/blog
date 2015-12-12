@@ -48,20 +48,46 @@ App.router.protectedRoute('/posts/new', function() {
     App.router.setContent(content)
   })
 
+  App.router.view.on('blur', 'input[name="title"]', function(e) {
+    validateTitle($(this))
+  })
+
+  App.router.view.on('blur', 'textarea[name="content"]', function(e) {
+    validateContent($(this))
+  })
+
+  App.router.view.on('blur', 'select[name="category"]', function(e) {
+    validateCategory($(this))
+  })
+
   App.router.view.on('submit', '#new-form', function(e) {
     e.preventDefault()
 
-    $.post(
-      `${config.API_URL}/posts`,
-      {
-        title:      $('#title').val(),
-        content:    $('#content').val(),
-        categoryID: $('#category').val()
-      },
-      function(data) {
-        App.router.transitionTo(`/posts/${data.data.id}`)
-        Notify.success('Post erfolgreich gespeichert')
-      }
-    )
+    var title    = $('input[name="title"]')
+    var content  = $('textarea[name="content"]')
+    var category = $('select[name="category"]')
+
+    validateTitle(title)
+    validateContent(content)
+    validateCategory(category)
+
+    if (!(
+      title.hasClass('error') ||
+      content.hasClass('error') ||
+      category.hasClass('error')
+    )) {
+      $.post(
+        `${config.API_URL}/posts`,
+        {
+          title:      title.val(),
+          content:    content.val(),
+          categoryID: category.val()
+        },
+        function(data) {
+          App.router.transitionTo(`/posts/${data.data.id}`)
+          Notify.success('Post erfolgreich gespeichert')
+        }
+      )
+    }
   })
 })

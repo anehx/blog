@@ -28,6 +28,9 @@ var libJs = concat('lib', {
 
 var appJs = concat('app', {
   inputFiles: [
+    'helpers/*.js',
+    'validation/*.js',
+    'components/**/*.js',
     '**/*.js'
   ],
   outputFile: '/app.js'

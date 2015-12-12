@@ -15,6 +15,10 @@ App.router.route('/(\\d+)/edit', function() {
         </div>
       `)
 
+      App.router.view.on('blur', 'input[name="blogname"]', function(e) {
+        validateBlogname($(this))
+      })
+
       App.router.view.on('submit', '#blog-form', function(e) {
         e.preventDefault()
 
@@ -22,20 +26,19 @@ App.router.route('/(\\d+)/edit', function() {
         var blogname = $('input[name="blogname"]')
         var blogID   = $('input[name="blogID"]').val()
 
-        if (blogname.val() < 1) {
-          blogname.addClass('error')
-          valid = false
-        }
+        validateBlogname(blogname)
 
-        $.ajax({
-          url: `${config.API_URL}/blogs/${blogID}`,
-          method: 'PUT',
-          data: { blogname: blogname.val() },
-          success: function(data) {
-            App.router.transitionTo('/' + blogID)
-            Notify.success('Blogname erfolgreich geändert')
-          }
-        })
+        if (!blogname.hasClass('error')) {
+          $.ajax({
+            url: `${config.API_URL}/blogs/${blogID}`,
+            method: 'PUT',
+            data: { blogname: blogname.val() },
+            success: function(data) {
+              App.router.transitionTo('/' + blogID)
+              Notify.success('Blogname erfolgreich geändert')
+            }
+          })
+        }
       })
     }
     else {

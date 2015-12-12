@@ -3,8 +3,8 @@ App.router.route('/login', function() {
     <div class="login">
       <div>
         <form id="login" class="login-form">
-          <input name="username" type="text" placeholder="Benutzername" class="form-control" />
-          <input name="password" type="password" placeholder="Password" class="form-control" />
+          <input name="username"  placeholder="Benutzername" type="text" class="form-control" />
+          <input name="password"  placeholder="Passwort" type="password" class="form-control" />
           <button type="submit" class="btn btn--primary">Login</button>
         </form>
         <a href="/register" class="history-link">Sie haben noch keinen Account?</a>
@@ -12,28 +12,47 @@ App.router.route('/login', function() {
     </div>
   `)
 
+  this.view.on('blur', 'input[name="password"]', function(e) {
+    validatePassword($(this))
+  })
+
+  this.view.on('blur', 'input[name="username"]', function(e) {
+    validateUsername($(this))
+  })
+
   this.view.on('submit', '#login', function(e) {
     e.preventDefault()
 
-    var username = $(this).find('[name="username"]').val()
-    var password = $(this).find('[name="password"]').val()
+    var username = $(this).find('input[name="username"]')
+    var password = $(this).find('input[name="password"]')
 
-    $.post(
-      `${config.API_URL}/login`,
-      { username: username, password: password },
-      function(data, textStatus, jqXHR) {
-        var token = btoa(`${data.data.username}:${password}`)
+    validateUsername(username)
+    validatePassword(password)
 
-        App.setUser(data.data)
+    if (!(
+      username.hasClass('error') ||
+      password.hasClass('error')
+    )) {
+      $.post(
+        `${config.API_URL}/login`,
+        {
+          username: username.val(),
+          password: password.val()
+        },
+        function(data, textStatus, jqXHR) {
+          var token = btoa(`${data.data.username}:${password.val()}`)
 
-        var d = new Date()
-        d.setTime(d.getTime() + (7*24*60*60*1000)) // expire after 7 days
+          App.setUser(data.data)
 
-        document.cookie = `token=${token}; expires=${d.toUTCString()}`
+          var d = new Date()
+          d.setTime(d.getTime() + (7*24*60*60*1000)) // expire after 7 days
 
-        Notify.success('Erfolgreich eingeloggt')
-        App.router.transitionTo('/' + data.data.blog.id)
-      }
-    )
+          document.cookie = `token=${token}; expires=${d.toUTCString()}`
+
+          Notify.success('Erfolgreich eingeloggt')
+          App.router.transitionTo('/' + data.data.blog.id)
+        }
+      )
+    }
   })
 })
