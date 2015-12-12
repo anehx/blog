@@ -9,8 +9,12 @@ class CommentController extends Controller {
 
         try {
             $comment = Comment::find(array('id' => $params));
+            $post    = Post::find(array('id' => $comment->postID), 'blog');
 
-            if ($comment->userID === $request->user->id) {
+            if (
+                $comment->userID    === $request->user->id ||
+                $post->blog->userID === $request->user->id
+            ) {
                 $comment->delete();
 
                 static::response(array(), 200, '');

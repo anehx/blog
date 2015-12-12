@@ -31,7 +31,7 @@ App.router.route('/posts/(\\d+)', function() {
         <div class="comments">
     `
 
-    App.store.query('comments', { postID: post.id }, 'user', function(comments) {
+    App.store.query('comments', { postID: post.id }, 'user,post', function(comments) {
       var header = `${comments.data.length} Kommentar` + (comments.data.length === 1 ? '' : 'e')
       var form   = App.getUser() ? `
         <div class="comments-form">
@@ -55,7 +55,8 @@ App.router.route('/posts/(\\d+)', function() {
       `
       comments.data.forEach(function(comment) {
         var admin = comment.user.isAdmin ? ' (Administrator)' : ''
-        var icons = comment.user.id === App.getUser().id ? `
+        var user  = App.getUser()
+        var icons = (comment.user.id === user.blog.id  || comment.post.blogID === user.blog.id) ? `
           <a href="#" class="delete-comment" title="Kommentar löschen" data-id="${comment.id}">
             <i class="fa fa-trash"></i>
           </a>
