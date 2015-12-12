@@ -15,7 +15,7 @@ App.router.route('/posts/(\\d+)', function() {
         </a>
       `
     }
-    else if (user.isAdmin) {
+    else if (user && user.isAdmin) {
         icons += `<a href="#" id="delete-post" data-blogID="${post.blogID}" data-id="${post.id}" title="Post löschen">
           <i class="fa fa-trash"></i>
         </a>
@@ -62,7 +62,7 @@ App.router.route('/posts/(\\d+)', function() {
       comments.data.forEach(function(comment) {
         var admin = comment.user.isAdmin ? ' (Administrator)' : ''
         var user  = App.getUser()
-        var icons = (comment.user.id === user.blog.id  || comment.post.blogID === user.blog.id) ? `
+        var icons = ( user && (comment.user.id === user.blog.id  || comment.post.blogID === user.blog.id)) ? `
           <a href="#" class="delete-comment" title="Kommentar löschen" data-id="${comment.id}">
             <i class="fa fa-trash"></i>
           </a>
