@@ -8,6 +8,7 @@ restart-apache:
 	@vagrant ssh -c "sudo service apache2 restart"
 
 prepare:
+	@rm -rf tmp/
 	@mkdir tmp/
 	@cp -Rp backend/ tmp/backend
 	@cd frontend && broccoli build dist
@@ -20,6 +21,7 @@ prepare:
 	@sqlite3 tmp/backend/db/db.sqlite < tmp/backend/db/devdata.sql
 	@chmod 775 tmp/backend/db
 	@chmod 775 tmp/backend/db/db.sqlite
+	@cp tools/README.txt tmp/README.txt 2>/dev/null
 	@cd tmp && zip -r blog.zip *
 	@mv tmp/blog.zip .
 	@rm -rf tmp
