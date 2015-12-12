@@ -73,6 +73,7 @@ Router.prototype = {
         )
       }
 
+      $('#my-blog').show()
       $('nav a.history-link[href="/posts/new"]').parent().show()
       $('nav a.history-link[href="/logout"]').parent().show()
 
