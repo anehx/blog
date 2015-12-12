@@ -5,3 +5,5 @@ tmp/
 etc/
 .vagrant/
 npm-debug.log
+db.sqlite
+blog.zip
