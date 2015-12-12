@@ -244,9 +244,11 @@ class Model {
         );
 
         $stmt   = DbManager::prepare($query);
-        $values = (array)$this;
+        $values = array();
 
-        unset($values['id']);
+        foreach (static::$fields as $k => $v) {
+            $values[$k] = $this->get($k);
+        }
 
         $stmt->execute($values);
         $this->id = DbManager::lastInsertId();

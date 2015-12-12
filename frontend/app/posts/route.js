@@ -15,6 +15,12 @@ App.router.route('/posts/(\\d+)', function() {
         </a>
       `
     }
+    else if (user.isAdmin) {
+        icons += `<a href="#" id="delete-post" data-blogID="${post.blogID}" data-id="${post.id}" title="Post löschen">
+          <i class="fa fa-trash"></i>
+        </a>
+        `
+    }
 
     var paragraphs = post.content.split('\n').join('</p><p>')
 

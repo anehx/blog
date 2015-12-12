@@ -4,7 +4,7 @@ App.router.route('', function() {
     data.data.forEach(function(blog) {
       content += `
         <div>
-          <a href="/${blog.id}" class="history-link link-postfix">${blog.name}</a><br>
+          <a href="/${blog.id}" class="history-link">${blog.name}</a><br>
         </div>
       `
     })

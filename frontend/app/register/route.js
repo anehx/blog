@@ -28,7 +28,7 @@ App.router.route('/register', function() {
       blogname.addClass('error')
     }
 
-    if (!/^[A-Za-z0-9]*$/.test(username.val()) || username.val().length > 6) {
+    if (!/^[A-Za-z0-9]*$/.test(username.val()) || username.val().length < 4) {
       username.addClass('error')
       valid = false
     }
@@ -57,7 +57,11 @@ App.router.route('/register', function() {
             App.router.transitionTo('/login')
           }
         }
-      )
+      ).fail(function(xhr, status, error) {
+        if (xhr.responseJSON) {
+          Notify.error(`${xhr.status}: ${xhr.responseJSON.detail}`)
+        }
+      })
     }
   })
 })

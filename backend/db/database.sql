@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS Blog (
     id     INTEGER PRIMARY KEY,
     userID INTEGER NOT NULL UNIQUE,
     name   VARCHAR NOT NULL,
-    FOREIGN KEY(userID) REFERENCES User(id)
+    FOREIGN KEY(userID) REFERENCES User(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Category (
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS Post (
     title      VARCHAR NOT NULL,
     content    TEXT    NOT NULL,
     created    INTEGER NOT NULL,
-    FOREIGN KEY(blogID)     REFERENCES Blog(id),
+    FOREIGN KEY(blogID)     REFERENCES Blog(id) ON DELETE CASCADE,
     FOREIGN KEY(categoryID) REFERENCES Category(id)
 );
 
@@ -34,6 +34,6 @@ CREATE TABLE IF NOT EXISTS Comment (
     postID     INTEGER NOT NULL,
     text       TEXT    NOT NULL,
     created    INTEGER NOT NULL,
-    FOREIGN KEY(userID)     REFERENCES User(id),
-    FOREIGN KEY(postID)     REFERENCES Post(id)
+    FOREIGN KEY(userID)     REFERENCES User(id) ON DELETE CASCADE,
+    FOREIGN KEY(postID)     REFERENCES Post(id) ON DELETE CASCADE
 );

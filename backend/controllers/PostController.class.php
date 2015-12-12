@@ -43,7 +43,10 @@ class PostController extends Controller {
         try {
             $post = Post::find(array('id' => $params), 'blog');
 
-            if ($post->blog->userID === $request->user->id) {
+            if (
+                $post->blog->userID === $request->user->id ||
+                $request->user->isAdmin
+            ) {
                 $post->delete();
 
                 static::response(array(), 200, '');
