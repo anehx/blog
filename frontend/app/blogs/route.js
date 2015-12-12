@@ -2,7 +2,11 @@ App.router.route('/(\\d+)', function() {
   var blogID = arguments[0]
 
   App.store.get('blogs', blogID, null, function(blog) {
-    var title = `<h1 class="page-title">${blog.data.name}</h1>`
+    var edit  = App.getUser().blog.id === blog.data.id ? `
+      <a class="history-link" href="/${blog.data.id}/edit"><i class="fa fa-pencil"></i></a>
+    ` : ''
+
+    var title = `<h1 class="page-title">${blog.data.name}${edit}</h1>`
 
     App.store.query('posts', { blogID: blog.data.id }, 'category,blog', function(data) {
       var content = `<div class="container">${title}<div class="post-list">`
