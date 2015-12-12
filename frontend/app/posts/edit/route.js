@@ -11,17 +11,19 @@ App.router.protectedRoute('/posts/(\\d+)/edit', function() {
     }
 
     var content = `
-    <div class="post">
-      <form id="edit-form">
-        <table>
-          <tr>
-            <td>
-              <label for="title">Titel:</label>
-            </td>
-            <td>
-              <input type="text" name="title" id="title" class="form-control" value="${post.title}">
-            </td>
-          </tr>
+    <div class="container">
+      <h1 class="page-title">Post "${post.title}" bearbeiten</h1>
+      <div class="post">
+        <form id="edit-form">
+          <table>
+            <tr>
+              <td>
+                <label for="title">Titel:</label>
+              </td>
+              <td>
+                <input type="text" name="title" id="title" class="form-control" value="${post.title}">
+              </td>
+            </tr>
     `
     App.store.getList('categories', null, function(data) {
       var select = ''
@@ -54,7 +56,7 @@ App.router.protectedRoute('/posts/(\\d+)/edit', function() {
             <button class="btn btn--primary">Speichern</button>
           </div>
         </form>
-      </div>`
+      </div></div>`
       App.router.setContent(content)
     })
   })

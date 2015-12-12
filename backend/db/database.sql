@@ -33,6 +33,7 @@ CREATE TABLE IF NOT EXISTS Comment (
     userID     INTEGER NOT NULL,
     postID     INTEGER NOT NULL,
     text       TEXT    NOT NULL,
+    created    INTEGER NOT NULL,
     FOREIGN KEY(userID)     REFERENCES User(id),
     FOREIGN KEY(postID)     REFERENCES Post(id)
 );

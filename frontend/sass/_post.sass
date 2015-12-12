@@ -5,16 +5,18 @@
   font-weight: bold
   margin-bottom: 20px
 
+.empty
+  width: 100%
+  text-align: center
+
 .post-list > .post
   border: thin solid #eee
-  box-shadow: 0 0 3px 1px rgba(0, 0, 0, .2)
   padding: 20px
+  border-radius: 5px
 
 .post
-  margin: 0 auto 20px
-  border-radius: 5px
-  width: 900px
-  padding: 0 20px
+  margin-bottom: 20px
+  padding: 0
   position: relative
 
   table
@@ -59,3 +61,35 @@
 
   a
     font-size: 14px
+
+.comments
+  width: 100%
+  border: 1px solid #ddd
+  margin-bottom: 20px
+  border-radius: 5px
+
+  .comments-header
+    padding: 20px
+    background-color: #eee
+
+  .comments-form
+    padding: 20px
+    border-bottom: 1px solid #ddd
+    .form-control
+      width: 100%
+      resize: none
+      height: 90px
+
+  .comments-list
+    .comment
+      padding: 20px
+      border-bottom: 1px solid #ddd
+
+      &:last-child
+        border-bottom: none
+
+      strong
+        font-weight: bold
+
+      p
+        margin: 10px

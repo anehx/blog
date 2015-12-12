@@ -15,11 +15,11 @@ class Request {
             case 'POST':
             case 'PUT':
                 if (!empty($_POST)) {
-                    $this->body = $_POST;
+                    $this->body = array_merge($_POST, $_GET);
                 }
                 else {
                     parse_str(file_get_contents('php://input'), $post);
-                    $this->body = $post;
+                    $this->body = array_merge($post, $_GET);
                 }
                 break;
             case 'GET':

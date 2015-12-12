@@ -26,4 +26,4 @@ INSERT INTO Blog (userID, name) VALUES (
 INSERT INTO Category (name) VALUES ("Sport");
 INSERT INTO Category (name) VALUES ("Auto");
 INSERT INTO Category (name) VALUES ("Freizeit");
-INSERT INTO Category (name) VALUES ("Klatsch & Tratsch");
+INSERT INTO Category (name) VALUES ("Sonstiges");

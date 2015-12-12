@@ -25,6 +25,20 @@ class Comment extends Model {
             'type'     => 'string',
             'required' => true,
             'related'  => null
+        ),
+        'created'      => array(
+            'type'     => 'int',
+            'required' => true,
+            'related'  => null
         )
     );
+
+    /**
+     *
+     * Default ordering key
+     *
+     * @static
+     * @property string $ordering
+     */
+    protected static $ordering = 'created DESC';
 }

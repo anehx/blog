@@ -27,4 +27,12 @@ class User extends Model {
             'related'  => null
         )
     );
+
+    /**
+     *
+     * Set the password as protected prop
+     *
+     * @property string $password
+     */
+    protected $password;
 }

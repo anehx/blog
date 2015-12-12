@@ -1,5 +1,7 @@
 App.router.protectedRoute('/posts/new', function() {
   var content = `
+  <div class="container">
+  <h1 class="page-title">Neuer Post</h1>
   <div class="post">
     <form id="new-form">
       <table>
@@ -42,7 +44,7 @@ App.router.protectedRoute('/posts/new', function() {
           <button class="btn btn--primary">Speichern</button>
         </div>
       </form>
-    </div>`
+    </div></div>`
     App.router.setContent(content)
   })
 

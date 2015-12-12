@@ -4,7 +4,7 @@ include_once __DIR__ . '/../models/User.class.php';
 include_once __DIR__ . '/../utils/Request.class.php';
 
 class Controller {
-    protected static function response($data, $status, $detail = null) {
+    public static function response($data, $status, $detail = null) {
         header('Content-Type: application/json; charset=utf-8');
         http_response_code($status);
 
