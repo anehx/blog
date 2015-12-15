@@ -1,11 +1,14 @@
 /**
  * The main application object
  *
+ * @public
+ * @type {Object}
  */
 var App = {
   /**
    * The main router
    *
+   * @public
    * @property {Router} router The Router
    */
   router: new Router(),
@@ -13,6 +16,7 @@ var App = {
   /**
    * The main router
    *
+   * @public
    * @property {Router} router The Router
    */
   store: new Store(),
