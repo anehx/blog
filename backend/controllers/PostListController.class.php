@@ -3,7 +3,19 @@
 require_once __DIR__ . '/Controller.class.php';
 require_once __DIR__ . '/../models/Post.class.php';
 
+/**
+ * The post list controller /api/v1/posts
+ *
+ */
 class PostListController extends Controller {
+
+    /**
+     * Gets a list of posts
+     *
+     * @param Request $request
+     * @param string $params
+     * @return void
+     */
     protected static function get($request, $params) {
         try {
             $posts = Post::query($request->get('queryParams'), $request->include);
@@ -15,6 +27,13 @@ class PostListController extends Controller {
         static::response($posts, 200);
     }
 
+    /**
+     * Add a new post
+     *
+     * @param Request $request
+     * @param string $params
+     * @return void
+     */
     protected static function post($request, $params) {
         static::authorize($request);
 

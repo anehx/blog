@@ -3,26 +3,43 @@
 include_once __DIR__ . '/../models/User.class.php';
 include_once __DIR__ . '/../utils/Request.class.php';
 
+/**
+ * The main controller class
+ *
+ */
 class Controller {
+
+    /**
+     * Encodes data for frontend usage
+     *
+     * @param mixed $data
+     * @return mixed
+     */
+    protected static function encodeData($data) {
+        if (is_array($data) || is_object($data)) {
+            return array_map('static::encodeData', (array)$data);
+        }
+        elseif (is_string($data)) {
+            return htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
+        }
+        else {
+            return $data;
+        }
+    }
+
+    /**
+     * Outputs JSON response
+     *
+     * @param mixed $data
+     * @param int $status
+     * @param string $detail
+     */
     public static function response($data, $status, $detail = null) {
         header('Content-Type: application/json; charset=utf-8');
         http_response_code($status);
 
-        function filter($value) {
-            if (is_array($value) || is_object($value)) {
-                return array_map('filter', (array)$value);
-            }
-            elseif (is_string($value)) {
-                return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
-            }
-            else {
-                return $value;
-            }
-        }
-
-
         $json = json_encode(array(
-            'data'   => array_map('filter', (array)$data),
+            'data'   => array_map('static::encodeData', (array)$data),
             'detail' => $detail
         ));
 
@@ -30,6 +47,12 @@ class Controller {
         exit;
     }
 
+    /**
+     * Authorizes a request
+     *
+     * @param Request $request
+     * @return Request
+     */
     protected static function authorize($request) {
         try {
             $token = str_replace('Basic ', '', $request->getHeader('Authorization'));
@@ -57,6 +80,12 @@ class Controller {
         return $request;
     }
 
+    /**
+     * Main handle function
+     *
+     * @param string $params
+     * @return void
+     */
     public static function handle($params = array()) {
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
@@ -86,19 +115,48 @@ class Controller {
         }
     }
 
+    /**
+     * The get handler of this controller
+     *
+     * @param Request $request
+     * @param string $params
+     * @return void
+     */
     protected static function get($request, $params) {
         static::response(array(), 404, 'No GET handler defined for this route.');
     }
 
+    /**
+     * The post handler of this controller
+     *
+     * @param Request $request
+     * @param string $params
+     * @return void
+     */
     protected static function post($request, $params) {
         static::response(array(), 404, 'No POST handler defined for this route.');
     }
 
+    /**
+     * The put handler of this controller
+     *
+     * @param Request $request
+     * @param string $params
+     * @return void
+     */
     protected static function put($request, $params) {
         static::response(array(), 404, 'No PUT handler defined for this route.');
     }
 
+    /**
+     * The delete handler of this controller
+     *
+     * @param Request $request
+     * @param string $params
+     * @return void
+     */
     protected static function delete($request, $params) {
         static::response(array(), 404, 'No DELETE handler defined for this route.');
     }
+
 }

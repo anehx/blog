@@ -3,7 +3,19 @@
 require_once __DIR__ . '/Controller.class.php';
 require_once __DIR__ . '/../models/Blog.class.php';
 
+/**
+ * The blog controller /api/v1/blogs/<params>
+ *
+ */
 class BlogController extends Controller {
+
+    /**
+     * Gets a blog
+     *
+     * @param Request $request
+     * @param string $params
+     * @return void
+     */
     protected static function get($request, $params) {
         try {
             $blog = Blog::find(array('id' => $params));
@@ -14,6 +26,13 @@ class BlogController extends Controller {
         }
     }
 
+    /**
+     * Update a blog
+     *
+     * @param Request $request
+     * @param string $params
+     * @return void
+     */
     protected static function put($request, $params) {
         static::authorize($request);
 

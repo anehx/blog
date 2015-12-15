@@ -1,10 +1,21 @@
 <?php
 
 require_once __DIR__ . '/Controller.class.php';
-require_once __DIR__ . '/../models/User.class.php';
 require_once __DIR__ . '/../models/Blog.class.php';
 
+/**
+ * The login controller /api/v1/login
+ *
+ */
 class LoginController extends Controller {
+
+    /**
+     * Get the current authorize status
+     *
+     * @param Request $request
+     * @param string $params
+     * @return void
+     */
     protected static function get($request, $params) {
         static::authorize($request);
 
@@ -16,6 +27,14 @@ class LoginController extends Controller {
 
         static::response($user, 200);
     }
+
+    /**
+     * Log a user in
+     *
+     * @param Request $request
+     * @param string $params
+     * @return void
+     */
     protected static function post($request, $params) {
         try {
             $user = User::find(array('username' => $request->get('username')));

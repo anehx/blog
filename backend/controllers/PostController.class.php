@@ -3,7 +3,19 @@
 require_once __DIR__ . '/Controller.class.php';
 require_once __DIR__ . '/../models/Post.class.php';
 
+/**
+ * The post controller /api/v1/posts/<params>
+ *
+ */
 class PostController extends Controller {
+
+    /**
+     * Gets a post
+     *
+     * @param Request $request
+     * @param string $params
+     * @return void
+     */
     protected static function get($request, $params) {
         try {
             $post = Post::find(array('id' => $params), $request->include);
@@ -14,6 +26,13 @@ class PostController extends Controller {
         }
     }
 
+    /**
+     * Update a post
+     *
+     * @param Request $request
+     * @param string $params
+     * @return void
+     */
     protected static function put($request, $params) {
         static::authorize($request);
 
@@ -37,6 +56,13 @@ class PostController extends Controller {
         }
     }
 
+    /**
+     * Delete a post
+     *
+     * @param Request $request
+     * @param string $params
+     * @return void
+     */
     protected static function delete($request, $params) {
         static::authorize($request);
 

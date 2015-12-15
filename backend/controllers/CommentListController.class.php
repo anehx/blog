@@ -3,7 +3,19 @@
 require_once __DIR__ . '/Controller.class.php';
 require_once __DIR__ . '/../models/Comment.class.php';
 
+/**
+ * The comment list controller /api/v1/comments
+ *
+ */
 class CommentListController extends Controller {
+
+    /**
+     * Get a list of comments
+     *
+     * @param Request $request
+     * @param string $params
+     * @return void
+     */
     protected static function get($request, $params) {
         try {
             $comments = Comment::query($request->get('queryParams'), $request->include);
@@ -15,6 +27,13 @@ class CommentListController extends Controller {
         static::response($comments, 200);
     }
 
+    /**
+     * Add a comment
+     *
+     * @param Request $request
+     * @param string $params
+     * @return void
+     */
     protected static function post($request, $params) {
         static::authorize($request);
 
