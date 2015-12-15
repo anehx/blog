@@ -1,9 +1,43 @@
+/**
+ * The router
+ *
+ * @public
+ * @class
+ */
 function Router() {
+  /**
+   * The routes of this router
+   *
+   * @public
+   * @property {object[]} routes
+   */
   this.routes = []
+
+  /**
+   * The view element
+   *
+   * @public
+   * @property {jQuery} view
+   */
   this.view   = $('#view')
 }
 
+/**
+ * The prototype of the router
+ *
+ * @public
+ * @lends Router
+ */
 Router.prototype = {
+
+  /**
+   * Set the content of the page
+   *
+   * @public
+   * @param {String} content the content
+   * @param {Number} [transitionDuration] the duration of the fade
+   * @return {void}
+   */
   setContent: function(content, transitionDuration) {
     var duration = transitionDuration ? transitionDuration : 400
     this.view.fadeOut(duration, function() {
@@ -11,6 +45,13 @@ Router.prototype = {
     }.bind(this))
   },
 
+  /**
+   * Authorize the user
+   *
+   * @public
+   * @param {Function} callback the callback
+   * @return {void}
+   */
   authorize: function(callback) {
     $.get(`${config.API_URL}/api/v1/login`, function(data) {
       App.setUser(data.data)
@@ -21,6 +62,12 @@ Router.prototype = {
     })
   },
 
+  /**
+   * Output an error page
+   *
+   * @public
+   * @return {void}
+   */
   error: function() {
     this.setContent(`
       <div class="page-error">
@@ -33,6 +80,12 @@ Router.prototype = {
     `)
   },
 
+  /**
+   * Output a no permission page
+   *
+   * @public
+   * @return {void}
+   */
   noPermission: function() {
     this.setContent(`
       <div class="page-error">
@@ -45,10 +98,15 @@ Router.prototype = {
     `)
   },
 
-  apiError: function(err) {
-    this.setContent('<h1>The backend returned an error:</h1>' + '<code>' + err + '</code>')
-  },
-
+  /**
+   * Add a new route
+   *
+   * @public
+   * @param {String} re the pattern
+   * @param {Function} handler the handle callback
+   * @param {Boolean} isProtected does this route need to be authorized?
+   * @return {Router}
+   */
   addRoute: function(re, handler, isProtected) {
     var prefix = '^' + (re.length > 1 && config.HASH ? '/#' : '')
     var suffix = '/?$'
@@ -59,6 +117,36 @@ Router.prototype = {
     return this
   },
 
+  /**
+   * Add a public route
+   *
+   * @public
+   * @param {String} re the pattern
+   * @param {Function} handler the handle callback
+   * @return {Router}
+   */
+  route: function(re, handler) {
+    return this.addRoute(re, handler, false)
+  },
+
+  /**
+   * Add a protected route
+   *
+   * @public
+   * @param {String} re the pattern
+   * @param {Function} handler the handle callback
+   * @return {Router}
+   */
+  protectedRoute: function(re, handler) {
+    return this.addRoute(re, handler, true)
+  },
+
+  /**
+   * Toggle all nav links according to the applications status
+   *
+   * @public
+   * @return {void}
+   */
   toggleNavLinks: function() {
     var user = App.getUser()
 
@@ -88,14 +176,12 @@ Router.prototype = {
     }
   },
 
-  route: function(re, handler) {
-    return this.addRoute(re, handler, false)
-  },
-
-  protectedRoute: function(re, handler) {
-    return this.addRoute(re, handler, true)
-  },
-
+  /**
+   * Checks the current url to match a route
+   *
+   * @public
+   * @return {Router}
+   */
   check: function() {
     var fragment = location.pathname + location.hash
     var matched  = false
@@ -124,6 +210,13 @@ Router.prototype = {
     return this
   },
 
+  /**
+   * Transitions the application to a given URL
+   *
+   * @public
+   * @param {String} path the path to transition to
+   * @return {Router}
+   */
   transitionTo: function(path) {
     var url = (config.HASH && path.length > 1 && !/^\/#/.test(path)) ? `/#${path}` : path
     this.view.unbind()
@@ -138,21 +231,4 @@ Router.prototype = {
     return this
   }
 
-}
-
-function Route(router, regex, handler, isPublic) {
-  this.router   = router
-  this.regex    = regex
-  this.handler  = handler
-  this.isPublic = isPublic
-}
-
-Route.prototype.handle = function() {
-  return
-}
-
-Route.prototype.enforceLogin = function() {
-  if (!/token=(.*);?/.test(document.cookie)) {
-    this.router.transitionTo('/login')
-  }
 }
