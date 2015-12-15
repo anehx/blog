@@ -44,6 +44,7 @@ class Request {
     /**
      * The request constructor which builds the request object
      *
+     * @return void
      */
     public function __construct() {
         $this->method  = $_SERVER['REQUEST_METHOD'];
