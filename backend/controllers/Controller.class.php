@@ -8,8 +8,21 @@ class Controller {
         header('Content-Type: application/json; charset=utf-8');
         http_response_code($status);
 
+        function filter($value) {
+            if (is_array($value) || is_object($value)) {
+                return array_map('filter', (array)$value);
+            }
+            elseif (is_string($value)) {
+                return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+            }
+            else {
+                return $value;
+            }
+        }
+
+
         $json = json_encode(array(
-            'data'   => $data,
+            'data'   => array_map('filter', (array)$data),
             'detail' => $detail
         ));
 
