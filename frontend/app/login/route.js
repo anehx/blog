@@ -52,7 +52,11 @@ App.router.route('/login', function() {
           Notify.success('Erfolgreich eingeloggt')
           App.router.transitionTo('/' + data.data.blog.id)
         }
-      )
+      ).error(function(xhr) {
+        if (xhr.responseJSON) {
+          Notify.error(`${xhr.status}: ${xhr.responseJSON.detail}`)
+        }
+      })
     }
   })
 })
