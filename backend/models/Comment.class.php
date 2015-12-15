@@ -2,13 +2,16 @@
 
 require_once __DIR__ . '/Model.class.php';
 
+/**
+ * The comment model
+ *
+ */
 class Comment extends Model {
+
     /**
-     *
      * Fields of the model
      *
-     * @static
-     * @property array $fields
+     * @var array $fields
      */
     protected static $fields = array(
         'userID'       => array(
@@ -34,11 +37,9 @@ class Comment extends Model {
     );
 
     /**
-     *
      * Default ordering key
      *
-     * @static
-     * @property string $ordering
+     * @var string $ordering
      */
     protected static $ordering = 'created DESC';
 }

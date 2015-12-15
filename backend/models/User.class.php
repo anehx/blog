@@ -2,13 +2,16 @@
 
 require_once __DIR__ . '/Model.class.php';
 
+/**
+ * The user model
+ *
+ */
 class User extends Model {
+
     /**
-     *
      * Fields of the model
      *
-     * @static
-     * @property array $fields
+     * @var array $fields
      */
     protected static $fields = array(
         'username'     => array(
@@ -29,8 +32,7 @@ class User extends Model {
     );
 
     /**
-     *
-     * Set the password as protected prop
+     * Set the password as protected property
      *
      * @property string $password
      */

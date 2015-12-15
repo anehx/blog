@@ -2,13 +2,16 @@
 
 require_once __DIR__ . '/Model.class.php';
 
+/**
+ * The post model
+ *
+ */
 class Post extends Model {
+
     /**
-     *
      * Fields of the model
      *
-     * @static
-     * @property array $fields
+     * @var array $fields
      */
     protected static $fields = array(
         'categoryID'   => array(
@@ -39,10 +42,8 @@ class Post extends Model {
     );
 
     /**
-     *
      * Default ordering key
      *
-     * @static
      * @property string $ordering
      */
     protected static $ordering = 'created DESC';

@@ -2,13 +2,16 @@
 
 require_once __DIR__ . '/Model.class.php';
 
+/**
+ * The blog model
+ *
+ */
 class Blog extends Model {
+
     /**
-     *
      * Fields of the model
      *
-     * @static
-     * @property array $fields
+     * @var array $fields
      */
     protected static $fields = array(
         'userID'       => array(

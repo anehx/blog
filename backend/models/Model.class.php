@@ -8,39 +8,36 @@ require_once __DIR__ . '/Comment.class.php';
 require_once __DIR__ . '/Post.class.php';
 require_once __DIR__ . '/User.class.php';
 
+/**
+ * The basic model class
+ *
+ */
 class Model {
+
     /**
-     *
      * Fields of the model (needs to be defined in child class)
      *
-     * @static
-     * @property array $fields
+     * @var array $fields
      */
     protected static $fields = array();
 
     /**
-     *
      * Table name of the model
      *
-     * @static
-     * @property string $tableName
+     * @var string $tableName
      */
     protected static $tableName = null;
 
     /**
-     *
      * Default ordering key
      *
-     * @static
-     * @property string $ordering
+     * @var string $ordering
      */
     protected static $ordering = 'id';
 
     /**
-     *
      * Returns the table name of the model
      *
-     * @static
      * @return string
      */
     private static function __getTableName() {
@@ -48,10 +45,8 @@ class Model {
     }
 
     /**
-     *
      * Casts a variable to a given type
      *
-     * @static
      * @param  string $type
      * @param  string $variable
      * @return mixed
@@ -74,10 +69,8 @@ class Model {
     }
 
     /**
-     *
      * Checks if a field is a property of the model
      *
-     * @static
      * @param  string $field
      * @return void
      */
@@ -88,10 +81,8 @@ class Model {
     }
 
     /**
-     *
      * Validates a field of a model
      *
-     * @static
      * @param  string $field
      * @param  mixed  $value
      * @return void
@@ -113,7 +104,6 @@ class Model {
     }
 
     /**
-     *
      * Constructor of the model
      *
      * @param  array  $data
@@ -146,7 +136,6 @@ class Model {
     }
 
     /**
-     *
      * Sets a property
      *
      * @param  string $field
@@ -160,7 +149,6 @@ class Model {
     }
 
     /**
-     *
      * Gets a property
      *
      * @param  string $field
@@ -173,7 +161,6 @@ class Model {
     }
 
     /**
-     *
      * Creates or updates a model
      *
      * @return static
@@ -188,7 +175,6 @@ class Model {
     }
 
     /**
-     *
      * Updates a model in the db
      *
      * @return static
@@ -210,7 +196,6 @@ class Model {
     }
 
     /**
-     *
      * Deletes a model in the db
      *
      * @return bool
@@ -228,7 +213,6 @@ class Model {
     }
 
     /**
-     *
      * Creates a model in the db
      *
      * @return static
@@ -257,7 +241,6 @@ class Model {
     }
 
     /**
-     *
      * Finds all models in the db
      * Wrapper for query
      *
@@ -269,7 +252,6 @@ class Model {
     }
 
     /**
-     *
      * Queries db for models by given criteria
      *
      * @param  array  $criteria
@@ -296,7 +278,6 @@ class Model {
     }
 
     /**
-     *
      * Finds a single model in the db by given criteria
      *
      * @param  array  $criteria
@@ -315,4 +296,5 @@ class Model {
 
         return $query[0];
     }
+
 }

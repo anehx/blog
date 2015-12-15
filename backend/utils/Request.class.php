@@ -1,12 +1,50 @@
 <?php
 
+/**
+ * A HTTP request
+ *
+ */
 class Request {
+
+    /**
+     * The HTTP method
+     *
+     * @var string $method
+     */
     public $method;
+
+    /**
+     * The request body
+     *
+     * @var string $request
+     */
     private $body;
+
+    /**
+     * The request headers
+     *
+     * @var array $headers
+     */
     private $headers;
+
+    /**
+     * The requests user object
+     *
+     * @var User $user
+     */
     public $user;
+
+    /**
+     * The requests include params
+     *
+     * @var string $include
+     */
     public $include;
 
+    /**
+     * The request constructor which builds the request object
+     *
+     */
     public function __construct() {
         $this->method  = $_SERVER['REQUEST_METHOD'];
         $this->headers = getallheaders();
@@ -37,6 +75,13 @@ class Request {
         }
     }
 
+    /**
+     * Returns the value of a key in the request body
+     *
+     * @param string $key
+     * @throws OutOfBoundsException
+     * @return mixed
+     */
     public function get($key) {
         if (!isset($this->body[$key])) {
             throw new OutOfBoundsException(sprintf('Key %s is not a valid key', $key));
@@ -45,6 +90,13 @@ class Request {
         return $this->body[$key];
     }
 
+    /**
+     * Returns the value of a key in the request headers
+     *
+     * @param string $key
+     * @throws OutOfBoundsException
+     * @return mixed
+     */
     public function getHeader($key) {
         if (!isset($this->headers[$key])) {
             throw new OutOfBoundsException(sprintf('Header %s is not given', $key));
@@ -52,4 +104,5 @@ class Request {
 
         return $this->headers[$key];
     }
+
 }
