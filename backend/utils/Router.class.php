@@ -3,6 +3,9 @@
 /**
  * The URL router
  *
+ * @author Jonas Metzener
+ * @license MIT
+ * @copyright Copyright (c) 2015, Jonas Metzener
  */
 class Router {
 

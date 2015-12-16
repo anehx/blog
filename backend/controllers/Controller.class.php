@@ -6,6 +6,9 @@ include_once __DIR__ . '/../utils/Request.class.php';
 /**
  * The main controller class
  *
+ * @author Jonas Metzener
+ * @license MIT
+ * @copyright Copyright (c) 2015, Jonas Metzener
  */
 class Controller {
 

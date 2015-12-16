@@ -6,6 +6,9 @@ require_once __DIR__ . '/../models/Category.class.php';
 /**
  * The category list controller /api/v1/categories
  *
+ * @author Jonas Metzener
+ * @license MIT
+ * @copyright Copyright (c) 2015, Jonas Metzener
  */
 class CategoryListController extends Controller {
 

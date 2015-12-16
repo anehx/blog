@@ -6,6 +6,9 @@ require_once __DIR__ . '/../models/Blog.class.php';
 /**
  * The blog controller /api/v1/blogs/<params>
  *
+ * @author Jonas Metzener
+ * @license MIT
+ * @copyright Copyright (c) 2015, Jonas Metzener
  */
 class BlogController extends Controller {
 

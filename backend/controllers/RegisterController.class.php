@@ -6,6 +6,9 @@ require_once __DIR__ . '/../models/User.class.php';
 /**
  * The register controller /api/v1/register
  *
+ * @author Jonas Metzener
+ * @license MIT
+ * @copyright Copyright (c) 2015, Jonas Metzener
  */
 class RegisterController extends Controller {
 

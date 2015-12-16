@@ -6,6 +6,9 @@ require_once __DIR__ . '/../models/Blog.class.php';
 /**
  * The login controller /api/v1/login
  *
+ * @author Jonas Metzener
+ * @license MIT
+ * @copyright Copyright (c) 2015, Jonas Metzener
  */
 class LoginController extends Controller {
 

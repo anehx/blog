@@ -11,6 +11,9 @@ require_once __DIR__ . '/User.class.php';
 /**
  * The basic model class
  *
+ * @author Jonas Metzener
+ * @license MIT
+ * @copyright Copyright (c) 2015, Jonas Metzener
  */
 class Model {
 

@@ -3,6 +3,9 @@
 /**
  * A HTTP request
  *
+ * @author Jonas Metzener
+ * @license MIT
+ * @copyright Copyright (c) 2015, Jonas Metzener
  */
 class Request {
 

@@ -6,6 +6,9 @@ require_once __DIR__ . '/../models/Post.class.php';
 /**
  * The post controller /api/v1/posts/<params>
  *
+ * @author Jonas Metzener
+ * @license MIT
+ * @copyright Copyright (c) 2015, Jonas Metzener
  */
 class PostController extends Controller {
 

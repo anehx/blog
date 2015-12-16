@@ -3,6 +3,9 @@
 /**
  * Wrapper for a PDO instance
  *
+ * @author Jonas Metzener
+ * @license MIT
+ * @copyright Copyright (c) 2015, Jonas Metzener
  */
 class DbManager {
 

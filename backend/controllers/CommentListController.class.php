@@ -6,6 +6,9 @@ require_once __DIR__ . '/../models/Comment.class.php';
 /**
  * The comment list controller /api/v1/comments
  *
+ * @author Jonas Metzener
+ * @license MIT
+ * @copyright Copyright (c) 2015, Jonas Metzener
  */
 class CommentListController extends Controller {
 
