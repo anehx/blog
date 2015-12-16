@@ -4,17 +4,24 @@ install:
 run:
 	@vagrant up && vagrant ssh -c "cd /vagrant/frontend && npm start"
 
+guide:
+	@rm -rf docs/build && sphinx-build -b html docs/source/ docs/build/
+
+guide-watch:
+	@while true; do inotifywait -r -e close_write docs; make guide; done
+
 restart-apache:
 	@vagrant ssh -c "sudo service apache2 restart"
 
-prepare:
+prepare: guide
 	@rm -rf tmp/
 	@mkdir tmp/
 	@cp -Rp backend/ tmp/backend
 	@cd frontend && broccoli build dist
 	@mv frontend/dist  tmp/frontend
+	@cp -R docs/build tmp/frontend/docs
 	@cp tools/vhost.conf tmp/
-	@sed -i 's/HASH: true/HASH: false/' tmp/frontend/app.js
+	@sed -i 's/HASH: true/HASH: false/' tmp/frontend/js/config.js
 	@rm tmp/backend/db/db.sqlite
 	@touch tmp/backend/db/db.sqlite
 	@sqlite3 tmp/backend/db/db.sqlite < tmp/backend/db/database.sql
