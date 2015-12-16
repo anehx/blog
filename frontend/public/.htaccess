@@ -1,5 +1,5 @@
 Options +FollowSymLinks
 RewriteEngine On
 RewriteBase /
-RewriteRule ^(app.js|vendor.js|app.css|favicon.png)($|/) - [L]
+RewriteRule ^(docs|js|css|fonts|favicon.png)($|/) - [L]
 RewriteRule ^(.*)$ index.html [L]

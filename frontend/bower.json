@@ -4,6 +4,8 @@
   "homepage": "https://github.com/anehx/blog",
   "license": "MIT",
   "dependencies": {
-    "jquery": "~2.1.4"
+    "jquery": "~2.1.4",
+    "font-awesome": "~4.5.0",
+    "raleway": "~1.0.1"
   }
 }

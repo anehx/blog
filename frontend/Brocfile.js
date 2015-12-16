@@ -6,16 +6,41 @@ var funnel       = require('broccoli-funnel')
 var mergeTrees   = require('broccoli-merge-trees')
 var autoprefixer = require('broccoli-autoprefixer')
 
-var appSass  = autoprefixer(compileSass([ 'sass' ], 'app.sass', 'app.css'))
+var appSass  = autoprefixer(compileSass(
+  [ 'sass' ],
+  'app.sass',
+  'css/app.css'
+))
+
+var fa = funnel('bower_components/font-awesome/fonts', {
+  destDir: 'fonts'
+})
+
+var ralewayBold = funnel('bower_components/raleway/fonts/bold', {
+  destDir: 'fonts'
+})
+
+var ralewayLight = funnel('bower_components/raleway/fonts/light', {
+  destDir: 'fonts'
+})
+
+var fonts = mergeTrees([ ralewayBold, ralewayLight, fa ])
+
+var vendorCss = concat('bower_components', {
+  inputFiles: [
+    'font-awesome/css/font-awesome.css'
+  ],
+  outputFile: '/css/vendor.css'
+})
 
 var vendorJs = concat('bower_components', {
   inputFiles: [
     'jquery/dist/jquery.js'
   ],
-  outputFile: '/vendor.js'
+  outputFile: '/js/vendor.js'
 })
 
-var config = 'config'
+var configJs = funnel('config', { destDir: 'js' })
 
 var libJs = concat('lib', {
   inputFiles: [
@@ -23,7 +48,7 @@ var libJs = concat('lib', {
     'Store.js',
     'App.js'
   ],
-  outputFile: '/lib.js'
+  outputFile: '/js/lib.js'
 })
 
 var appJs = concat('app', {
@@ -33,18 +58,9 @@ var appJs = concat('app', {
     'components/**/*.js',
     '**/*.js'
   ],
-  outputFile: '/app.js'
+  outputFile: '/js/app.js'
 })
 
 var assets = funnel('public')
 
-var js = concat(mergeTrees([ config, libJs, appJs ]), {
-  inputFiles: [
-    'environment.js',
-    'lib.js',
-    'app.js'
-  ],
-  outputFile: '/app.js'
-})
-
-module.exports = mergeTrees([ appSass, vendorJs, js, assets ])
+module.exports = mergeTrees([ appSass, assets, vendorJs, libJs, configJs, appJs, fonts, vendorCss ])
