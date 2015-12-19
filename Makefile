@@ -17,10 +17,12 @@ prepare: guide
 	@rm -rf tmp/
 	@mkdir tmp/
 	@cp -Rp backend/ tmp/backend
+	@cp -Rp tools/ tmp/tools
+	@cp Vagrantfile tmp/Vagrantfile
+	@mv tmp/tools/vhost.conf tmp/tools/vagrant/vhost.conf
 	@cd frontend && broccoli build dist
 	@mv frontend/dist  tmp/frontend
 	@cp -R docs/build tmp/frontend/docs
-	@cp tools/vhost.conf tmp/
 	@sed -i 's/HASH: true/HASH: false/' tmp/frontend/js/config.js
 	@rm tmp/backend/db/db.sqlite
 	@touch tmp/backend/db/db.sqlite
@@ -28,7 +30,8 @@ prepare: guide
 	@sqlite3 tmp/backend/db/db.sqlite < tmp/backend/db/devdata.sql
 	@chmod 775 tmp/backend/db
 	@chmod 775 tmp/backend/db/db.sqlite
-	@cp tools/README.txt tmp/README.txt 2>/dev/null
+	@mv tmp/tools/README.txt tmp/README.txt 2>/dev/null
+	@mv tmp/tools/vagrant/setup_prod.sh tmp/tools/vagrant/setup.sh
 	@cd tmp && zip -r blog.zip *
 	@mv tmp/blog.zip .
 	@rm -rf tmp
