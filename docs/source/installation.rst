@@ -13,9 +13,9 @@ Anforderungen
 
 Konfiguration
 '''''''''''''
-Benutzen Sie die Beispielkonfiguration (vhost.conf) und ändern Sie die Pfade ab, sodass Sie stimmen. Zusätzlich müssen die oben genannten Apache2 Module aktiviert sein, dass die Kommunikation zwischen Front- und Backend funktioniert.
+Benutzen Sie die Beispielkonfiguration (tools/vagrant/vhost.conf) und ändern Sie die Pfade ab, sodass Sie stimmen. Zusätzlich müssen die oben genannten Apache2 Module aktiviert sein, dass die Kommunikation zwischen Front- und Backend funktioniert.
 
-Die Variable API_URL in frontend/config.js muss auf den Hostnamen geändert werden (Wahrscheinlich http://localhost).
+Die Variable API_URL in frontend/config.js muss auf den Hostnamen geändert werden (Wahrscheinlich http://localhost/api/v1).
 
 Vagrant
 -------
