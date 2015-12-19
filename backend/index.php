@@ -40,5 +40,8 @@ $router->route('\/categories\/(\d+)', 'CategoryController::handle');
 $router->route('\/register', 'RegisterController::handle');
 $router->route('\/login',    'LoginController::handle');
 
-$router->execute($_SERVER['REDIRECT_URL']);
+if (isset($_SERVER['REDIRECT_URL'])) {
+    $router->execute($_SERVER['REDIRECT_URL']);
+}
+
 Controller::response(array(), 404, 'Route not found');
