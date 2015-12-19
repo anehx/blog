@@ -41,7 +41,7 @@ $router->route('\/register', 'RegisterController::handle');
 $router->route('\/login',    'LoginController::handle');
 
 if (isset($_SERVER['REDIRECT_URL'])) {
-    $router->execute($_SERVER['REDIRECT_URL']);
+    $router->execute(explode($_SERVER['REDIRECT_URL'])[0]);
 }
 
 Controller::response(array(), 404, 'Route not found');
