@@ -10,4 +10,14 @@ Anforderungen
 
 Konfiguration
 -------------
-Benutzen Sie die Beispielkonfiguration (vhost.conf) und ändern Sie die Pfade ab, sodass Sie stimmen.
+Benutzen Sie die Beispielkonfiguration (vhost.conf) und ändern Sie die Pfade ab, sodass Sie stimmen. Zusätzlich müssen die oben genannten Apache2 Module aktiviert sein, dass die Kommunikation zwischen Front- und Backend funktioniert.
+
+Zugangsdaten
+------------
+
+========  ========  ======
+Username  Passwort  Admin?
+========  ========  ======
+admin     123qwe    Ja
+tester    123qwe    Nein
+========  ========  ======

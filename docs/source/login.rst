@@ -1,6 +1,12 @@
 Login
 =====
+.. figure::  _static/images/login_nav.png
+    :align: center
+
+Um zum Login zu kommen, drücken Sie den entsprechenden Link im Menu.
+
 .. figure::  _static/images/login.png
+    :align: center
 
 Füllen Sie die gewünschten Felder aus und drücken Sie auf Login um sich
 einzuloggen.
